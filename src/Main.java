@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
@@ -6,9 +7,11 @@ public class Main {
     public static void main(String[] args) {
 
         Main main = new Main();
-        int[] security = {1,2,5,4,1,0,2,4,5,3,1,2,4,3,2,4,8};
-        int time = 2;
-        System.out.println(main.goodDaysToRobBank_(security,time));
+//        int[] security = {1,2,5,4,1,0,2,4,5,3,1,2,4,3,2,4,8};
+//        int time = 2;
+//        System.out.println(main.goodDaysToRobBank_(security,time));
+        int[] nums = {0,1,0};
+        System.out.println(main.findMaxLength_(nums));
 
     }
 
@@ -79,26 +82,49 @@ public class Main {
         return results;
     }
 
-
     /**
-     * 判断数组是否非递增
-     * @param security
-     * @param begin 开始
-     * @param end 结束
-     * @return boolean
+     * 525. 连续数组(超时)
+     * @param nums
+     * @return
      */
-    public boolean is_nonincrement(int[] security,int begin,int end){
-        return false;
+    public int findMaxLength(int[] nums) {
+
+        int n = nums.length;
+        int[] prefixNums = new int[n+1];
+        for (int i = 1; i <= n; i++){
+            prefixNums[i] += prefixNums[i-1]+nums[i-1];
+        }
+        int maxCount = 0;
+        for (int i = n; i >= 1; i--){
+            for (int j = 0; j < i; j++){
+                if((i-j)%2==0){
+                    if((i-j)/2 == prefixNums[i]-prefixNums[j]){
+                        maxCount = Math.max(maxCount,i-j);
+                    }
+                }
+            }
+        }
+        return maxCount;
     }
 
-    /**
-     * 判断数组是否非递减
-     * @param security
-     * @param begin 开始
-     * @param end 结束
-     * @return boolean
-     */
-    public boolean is_nondecrease(int[] security,int begin,int end){
-        return false;
+    public int findMaxLength_(int[] nums) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int n = nums.length;
+        int current = 0;
+        int maxCount = 0;
+        map.put(0,-1);
+        for (int i = 0; i < n; i++){
+            if(nums[i] == 0){
+                current-=1;
+            }else {
+                current+=1;
+            }
+            if(map.containsKey(current)){
+                maxCount = Math.max(i - map.get(current),maxCount);
+            }else{
+                map.put(current,i);
+            }
+        }
+        return maxCount;
     }
 }
