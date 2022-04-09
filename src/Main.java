@@ -1,4 +1,6 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,8 +12,17 @@ public class Main {
 //        int[] security = {1,2,5,4,1,0,2,4,5,3,1,2,4,3,2,4,8};
 //        int time = 2;
 //        System.out.println(main.goodDaysToRobBank_(security,time));
-        int[] nums = {0,1,0};
-        System.out.println(main.findMaxLength_(nums));
+//        int[] nums = {0,1,0};
+//        System.out.println(main.findMaxLength_(nums));
+        int[] w = {3,14,1,7};
+        Main main1 = new Main(w);
+        while (true){
+            System.out.println( main1.pickIndex_());
+        }
+
+    }
+
+    public Main(){
 
     }
 
@@ -107,6 +118,10 @@ public class Main {
         return maxCount;
     }
 
+    /**
+     * 525. 连续数组(前缀和+哈希)
+     * @return
+     */
     public int findMaxLength_(int[] nums) {
         HashMap<Integer,Integer> map = new HashMap<>();
         int n = nums.length;
@@ -126,5 +141,51 @@ public class Main {
             }
         }
         return maxCount;
+    }
+
+
+    /**
+     * 528. 按权重随机选择
+     */
+    int[] prefix = null;
+    int total = 0;
+    int n = 0;
+    public Main(int[] w) {
+        n = w.length;
+        prefix = new int[n+1];
+        for (int i = 1; i <= n; i++){
+            prefix[i] = prefix[i-1]+w[i-1];
+        }
+        total = Arrays.stream(w).sum();
+    }
+
+    public int pickIndex() {
+        int num = (int) (Math.random()*total)+1;
+        int result = 0;
+        for (int i = 1; i <= n; i++) {
+            if (num >= prefix[i - 1] && num < prefix[i]) {
+                result = i - 1;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public int pickIndex_(){
+        int num = (int)(Math.random()*total)+1;
+        return binarySearch(num);
+    }
+
+    public int binarySearch(int x){
+        int low = 0; int high = n-1;
+        while (low < high){
+            int mid = (low+high)/2;
+            if(prefix[mid] < x){
+                low = mid+1;
+            }else{
+                high = mid-1;
+            }
+        }
+        return low;
     }
 }
