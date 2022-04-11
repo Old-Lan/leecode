@@ -14,16 +14,24 @@ public class Main {
 //        System.out.println(main.goodDaysToRobBank_(security,time));
 //        int[] nums = {0,1,0};
 //        System.out.println(main.findMaxLength_(nums));
-        int[] w = {3,14,1,7};
-        Main main1 = new Main(w);
-        while (true){
-            System.out.println( main1.pickIndex_());
-        }
+//        int[] w = {3,14,1,7};
+//        int[] nums = {1,2,3,4};
+//        //2 1 3 4---1 3 2 4---1 2 4 3---
+//        //3 1 2 4---3 2 1 4---1 4 3 2---1 4 2 3---3 4 1 2---3 4 2 1
+//        int[] nums2 = {1,2,3};
+//        //
+//        Main main1 = new Main(w);
+//        while (true){
+//            System.out.println(main1.pickIndex_());
+//        }
+//        int[] nums = {1,7,3,6,5,6};
+//        int[] nums = {1,2,3};
+        int[] nums = {2,1,-1};
+        System.out.println(main.pivotIndex(nums));
 
     }
 
     public Main(){
-
     }
 
 
@@ -187,5 +195,27 @@ public class Main {
             }
         }
         return low;
+    }
+
+
+    /**
+     * 724. 寻找数组的中心下标
+     * @param nums
+     * @return
+     */
+    public int pivotIndex(int[] nums) {
+        int pivot = -1;
+        int n = nums.length;
+        int[] prefix = new int[n+1];
+        for (int i = 1; i <= n;i++){
+            prefix[i] = prefix[i-1]+nums[i-1];
+        }
+        for (int i = 1; i <= n;i++){
+            if(prefix[i-1] == prefix[n]-prefix[i]){
+                pivot=i-1;
+                break;
+            }
+        }
+        return pivot;
     }
 }
