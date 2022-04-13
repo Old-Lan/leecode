@@ -26,8 +26,9 @@ public class Main {
 //        }
 //        int[] nums = {1,7,3,6,5,6};
 //        int[] nums = {1,2,3};
-        int[] nums = {2,1,-1};
-        System.out.println(main.pivotIndex(nums));
+//        int[] nums = {2,1,-1};
+        int[] ages = {20,30,100,110,120};
+        System.out.println(main.numFriendRequests__(ages));
 
     }
 
@@ -217,5 +218,78 @@ public class Main {
             }
         }
         return pivot;
+    }
+
+
+    /**
+     * 825. 适龄的朋友(暴力)
+     * @param ages
+     * @return
+     */
+    public int numFriendRequests(int[] ages) {
+        int n = ages.length;
+        int count = 0;
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
+                if(i != j){
+                    if ((ages[i] <= 0.5*ages[j] + 7) || (ages[i] > ages[j]) || (ages[i] > 100 && ages[j] < 100)){
+
+                    }else {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
+
+    /**
+     * 825. 适龄的朋友(排序+双指针)
+     * @param ages
+     * @return
+     */
+    public int numFriendRequests_(int[] ages) {
+        int n = ages.length;
+        int count = 0; int left = 0; int right = 0;
+        Arrays.sort(ages);
+        for (int age:ages){
+            if(age < 15){
+                continue;
+            }
+            while (ages[left] <= 0.5*age+7){
+                ++left;
+            }
+            while (right+1 < n && ages[right+1] <= age){
+                ++right;
+            }
+            count+=right-left;
+        }
+        return count;
+    }
+
+
+    /**
+     * 825. 适龄的朋友(计数排序 + 前缀和)
+     * @param ages
+     * @return
+     */
+    public int numFriendRequests__(int[] ages) {
+        int[] cnt = new int[121];
+        for (int age:ages){
+            ++cnt[age];
+        }
+        int[] pre = new int[121];
+        for (int i = 1; i <=120; i++){
+            pre[i] = pre[i-1]+cnt[i];
+        }
+        int count = 0;
+        for (int i = 15; i <= 120;i++){
+            if(cnt[i] > 0){
+                int bound = (int)(i*0.5+8);
+                count+=cnt[i]*(pre[i] - pre[bound-1] - 1);
+            }
+        }
+        return count;
     }
 }
