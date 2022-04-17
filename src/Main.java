@@ -27,8 +27,9 @@ public class Main {
 //        int[] nums = {1,7,3,6,5,6};
 //        int[] nums = {1,2,3};
 //        int[] nums = {2,1,-1};
-        int[] ages = {20,30,100,110,120};
-        System.out.println(main.numFriendRequests__(ages));
+//        int[] ages = {20,30,100,110,120};
+        int[] nums = {1,0,1,0,1};
+        System.out.println(main.longestOnes_(nums,2));
 
     }
 
@@ -291,5 +292,106 @@ public class Main {
             }
         }
         return count;
+    }
+
+
+    /**
+     * 930. 和相同的二元子数组（暴力）
+     * @param nums
+     * @param goal
+     * @return
+     */
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        int n = nums.length;
+        int[] prefix = new int[n+1];
+        int count = 0;
+        for (int i = 1; i <=n;i++){
+            prefix[i] = prefix[i-1]+nums[i-1];
+        }
+        for (int i = 0; i < n;i++){
+            for (int j = i+1; j <= n;j++){
+                if(prefix[j]-prefix[i] == goal){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 930. 和相同的二元子数组（哈希表）
+     * @param nums
+     * @param goal
+     * @return
+     */
+    public int numSubarraysWithSum_(int[] nums, int goal) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int sum = 0;
+        int ret = 0;
+        for (int num:nums){
+            map.put(sum, map.getOrDefault(sum,0)+1);
+            sum+=num;
+            ret+=map.getOrDefault(sum-goal,0);
+        }
+        return ret;
+    }
+
+    /**
+     * 1004. 最大连续1的个数 III
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int longestOnes(int[] nums, int k) {
+        int n = nums.length;
+        if(k == n){
+            return k;
+        }
+        int[] prefix = new int[n+1];
+        int ret = 0;
+        for (int i = 1; i <= n; i++){
+            prefix[i] = prefix[i-1]+nums[i-1];
+        }
+        for (int i = 0; i<n; i++){
+            for (int j=i+1; j<=n; j++){
+                if (prefix[j]-prefix[i]+k==j-i){
+                    ret = Math.max(ret,j-i);
+                }
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * 1004. 最大连续1的个数 III
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int longestOnes_(int[] nums, int k) {
+        int n = nums.length;
+        int[] prefix = new int[n+1];
+        int ret = 0;
+        for (int i = 1; i <= n; i++){
+            prefix[i] = prefix[i-1]+(1-nums[i-1]);
+        }
+        for (int i = 0; i<n; i++){
+            int left = binarySearch(prefix,prefix[i+1]-k);
+            ret = Math.max(ret, i-left+1);
+        }
+        return ret;
+    }
+
+    private int binarySearch(int[] prefix, int target){
+        int low = 0; int high = prefix.length-1;
+        while (low < high){
+            int mid = (high+low)/2;
+            if(prefix[mid] < target){
+                low=mid+1;
+            }else {
+                high=mid;
+            }
+        }
+        return low;
     }
 }
