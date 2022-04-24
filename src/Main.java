@@ -1,8 +1,7 @@
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Main {
 
@@ -28,8 +27,10 @@ public class Main {
 //        int[] nums = {1,2,3};
 //        int[] nums = {2,1,-1};
 //        int[] ages = {20,30,100,110,120};
-        int[] nums = {1,0,1,0,1};
-        System.out.println(main.longestOnes_(nums,2));
+//        int[] nums = {1,0,1,0,1};
+//        System.out.println(main.longestOnes_(nums,2));
+        String date = "2019-03-10";
+        System.out.println(main.dayOfYear_(date));
 
     }
 
@@ -393,5 +394,44 @@ public class Main {
             }
         }
         return low;
+    }
+
+
+    /**
+     * 1154. 一年中的第几天
+     * @param date
+     * @return
+     */
+    public int dayOfYear(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = null;
+        try {
+            date1 = sdf.parse(date);
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        String str = String.format("%tj", date1);
+        return Integer.parseInt(str);
+    }
+
+    /**
+     * 1154. 一年中的第几天
+     * @param date
+     * @return
+     */
+    public long dayOfYear_(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = null;
+        Calendar ca = null;
+        try {
+            date1 = sdf.parse(date);
+            ca = Calendar.getInstance();
+            ca.setTime(date1);
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return ca.get(Calendar.DAY_OF_YEAR);
     }
 }
