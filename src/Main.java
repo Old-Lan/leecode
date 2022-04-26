@@ -1,6 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Main {
 
@@ -8,12 +8,32 @@ public class Main {
 
         Main main = new Main();
 //        int[] security = {1,2,5,4,1,0,2,4,5,3,1,2,4,3,2,4,8};
-//        int[] security = {5,3,3,3,5,6,2};
 //        int time = 2;
-//        System.out.println(main.goodDaysToRobBank_presum(security,time));
-        String s = "AAAAAAAAAAA";
-        System.out.println(main.findRepeatedDnaSequences(s));
+//        System.out.println(main.goodDaysToRobBank_(security,time));
+//        int[] nums = {0,1,0};
+//        System.out.println(main.findMaxLength_(nums));
+//        int[] w = {3,14,1,7};
+//        int[] nums = {1,2,3,4};
+//        //2 1 3 4---1 3 2 4---1 2 4 3---
+//        //3 1 2 4---3 2 1 4---1 4 3 2---1 4 2 3---3 4 1 2---3 4 2 1
+//        int[] nums2 = {1,2,3};
+//        //
+//        Main main1 = new Main(w);
+//        while (true){
+//            System.out.println(main1.pickIndex_());
+//        }
+//        int[] nums = {1,7,3,6,5,6};
+//        int[] nums = {1,2,3};
+//        int[] nums = {2,1,-1};
+//        int[] ages = {20,30,100,110,120};
+//        int[] nums = {1,0,1,0,1};
+//        System.out.println(main.longestOnes_(nums,2));
+        String date = "2019-03-10";
+        System.out.println(main.dayOfYear_(date));
 
+    }
+
+    public Main(){
     }
 
 
@@ -96,74 +116,359 @@ public class Main {
      * @param time
      * @return
      */
-    public List<Integer> goodDaysToRobBank_presum(int[] security,int time){
+    public List<Integer> goodDaysToRobBank_presum(int[] security,int time) {
         List<Integer> results = new ArrayList<>();
         int n = security.length;
         int[] non = new int[n];
-        for(int i = 1; i < n;i++){
-            if(security[i-1] == security[i]) continue;
-            non[i] = security[i-1] < security[i] ? 1 : -1;//1代表非递减，-1代表非递增
+        for (int i = 1; i < n; i++) {
+            if (security[i - 1] == security[i]) continue;
+            non[i] = security[i - 1] < security[i] ? 1 : -1;//1代表非递减，-1代表非递增
         }
-        int[] nonincre = new int[n+1];//非递增个数
-        int[] nondecre = new int[n+1];//非递减个数
-        for (int i = 1;i <= n;i++){
-            nonincre[i] = nonincre[i-1]+(non[i-1] == 1 ? 1:0);
-            nondecre[i] = nondecre[i-1]+(non[i-1] == -1?1:0);
+        int[] nonincre = new int[n + 1];//非递增个数
+        int[] nondecre = new int[n + 1];//非递减个数
+        for (int i = 1; i <= n; i++) {
+            nonincre[i] = nonincre[i - 1] + (non[i - 1] == 1 ? 1 : 0);
+            nondecre[i] = nondecre[i - 1] + (non[i - 1] == -1 ? 1 : 0);
         }
-        for (int i = time;i < n-time;i++){
-            int c1 = nonincre[i+1]-nonincre[i+1-time];
-            int c2 = nondecre[i+1+time]-nondecre[i+1];
-            if(c1 == 0 && c2 == 0){
+        for (int i = time; i < n - time; i++) {
+            int c1 = nonincre[i + 1] - nonincre[i + 1 - time];
+            int c2 = nondecre[i + 1 + time] - nondecre[i + 1];
+            if (c1 == 0 && c2 == 0) {
                 results.add(i);
             }
         }
         return results;
     }
 
+    /**
+     * 525. 连续数组(超时)
+     * @param nums
+     * @return
+     */
+    public int findMaxLength(int[] nums) {
+
+        int n = nums.length;
+        int[] prefixNums = new int[n+1];
+        for (int i = 1; i <= n; i++){
+            prefixNums[i] += prefixNums[i-1]+nums[i-1];
+        }
+        int maxCount = 0;
+        for (int i = n; i >= 1; i--){
+            for (int j = 0; j < i; j++){
+                if((i-j)%2==0){
+                    if((i-j)/2 == prefixNums[i]-prefixNums[j]){
+                        maxCount = Math.max(maxCount,i-j);
+                    }
+                }
+            }
+        }
+        return maxCount;
+    }
+
 
     /**
-     * 187. 重复的DNA序列
-     * @param s DNA序列
-     * @return 重复子序列
+     * 525. 连续数组(前缀和+哈希)
+     * @return
      */
-    public List<String> findRepeatedDnaSequences(String s) {
-        int num = 10;
-        List<String> results = new ArrayList<>();
-        char[] chars = s.toCharArray();
-        int n = s.length();
-        HashMap<String,Integer> map = new HashMap<>();
-        for (int i = 0; i <=n-num;i++){
-            int count = map.getOrDefault(s.substring(i,i+num),0);
-            if(count == 1) results.add(s.substring(i,i+10));
-            map.put(s.substring(i,i+num),++count);
+    public int findMaxLength_(int[] nums) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int n = nums.length;
+        int current = 0;
+        int maxCount = 0;
+        map.put(0,-1);
+        for (int i = 0; i < n; i++){
+            if(nums[i] == 0){
+                current-=1;
+            }else {
+                current+=1;
+            }
+            if(map.containsKey(current)){
+                maxCount = Math.max(i - map.get(current),maxCount);
+            }else{
+                map.put(current,i);
+            }
         }
-        return results;
+        return maxCount;
     }
 
 
-     //Definition for singly-linked list.
-     public class ListNode {
-         int val;
-         ListNode next;
-         ListNode() {}
-         ListNode(int val) { this.val = val; }
-         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-     }
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode sum = null;
-        if(sum != null){
-            sum.next = new ListNode(addVal(l1).val+addVal(l2).val);
-        }else{
-            sum = new ListNode(addVal(l1).val+addVal(l2).val);
+    /**
+     * 528. 按权重随机选择
+     */
+    int[] prefix = null;
+    int total = 0;
+    int n = 0;
+    public Main(int[] w) {
+        n = w.length;
+        prefix = new int[n+1];
+        for (int i = 1; i <= n; i++){
+            prefix[i] = prefix[i-1]+w[i-1];
         }
-        return sum;
+        total = Arrays.stream(w).sum();
     }
 
-    public ListNode addVal(ListNode node){
-        if(node.next == null){
-            return node;
-        }else {
-            return addVal(node.next);
+    public int pickIndex() {
+        int num = (int) (Math.random()*total)+1;
+        int result = 0;
+        for (int i = 1; i <= n; i++) {
+            if (num >= prefix[i - 1] && num < prefix[i]) {
+                result = i - 1;
+                break;
+            }
         }
+        return result;
+    }
+
+    public int pickIndex_(){
+        int num = (int)(Math.random()*total)+1;
+        return binarySearch(num);
+    }
+
+    public int binarySearch(int x){
+        int low = 0; int high = n-1;
+        while (low < high){
+            int mid = (low+high)/2;
+            if(prefix[mid] < x){
+                low = mid+1;
+            }else{
+                high = mid-1;
+            }
+        }
+        return low;
+    }
+
+
+    /**
+     * 724. 寻找数组的中心下标
+     * @param nums
+     * @return
+     */
+    public int pivotIndex(int[] nums) {
+        int pivot = -1;
+        int n = nums.length;
+        int[] prefix = new int[n+1];
+        for (int i = 1; i <= n;i++){
+            prefix[i] = prefix[i-1]+nums[i-1];
+        }
+        for (int i = 1; i <= n;i++){
+            if(prefix[i-1] == prefix[n]-prefix[i]){
+                pivot=i-1;
+                break;
+            }
+        }
+        return pivot;
+    }
+
+
+    /**
+     * 825. 适龄的朋友(暴力)
+     * @param ages
+     * @return
+     */
+    public int numFriendRequests(int[] ages) {
+        int n = ages.length;
+        int count = 0;
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
+                if(i != j){
+                    if ((ages[i] <= 0.5*ages[j] + 7) || (ages[i] > ages[j]) || (ages[i] > 100 && ages[j] < 100)){
+
+                    }else {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
+
+    /**
+     * 825. 适龄的朋友(排序+双指针)
+     * @param ages
+     * @return
+     */
+    public int numFriendRequests_(int[] ages) {
+        int n = ages.length;
+        int count = 0; int left = 0; int right = 0;
+        Arrays.sort(ages);
+        for (int age:ages){
+            if(age < 15){
+                continue;
+            }
+            while (ages[left] <= 0.5*age+7){
+                ++left;
+            }
+            while (right+1 < n && ages[right+1] <= age){
+                ++right;
+            }
+            count+=right-left;
+        }
+        return count;
+    }
+
+
+    /**
+     * 825. 适龄的朋友(计数排序 + 前缀和)
+     * @param ages
+     * @return
+     */
+    public int numFriendRequests__(int[] ages) {
+        int[] cnt = new int[121];
+        for (int age:ages){
+            ++cnt[age];
+        }
+        int[] pre = new int[121];
+        for (int i = 1; i <=120; i++){
+            pre[i] = pre[i-1]+cnt[i];
+        }
+        int count = 0;
+        for (int i = 15; i <= 120;i++){
+            if(cnt[i] > 0){
+                int bound = (int)(i*0.5+8);
+                count+=cnt[i]*(pre[i] - pre[bound-1] - 1);
+            }
+        }
+        return count;
+    }
+
+
+    /**
+     * 930. 和相同的二元子数组（暴力）
+     * @param nums
+     * @param goal
+     * @return
+     */
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        int n = nums.length;
+        int[] prefix = new int[n+1];
+        int count = 0;
+        for (int i = 1; i <=n;i++){
+            prefix[i] = prefix[i-1]+nums[i-1];
+        }
+        for (int i = 0; i < n;i++){
+            for (int j = i+1; j <= n;j++){
+                if(prefix[j]-prefix[i] == goal){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 930. 和相同的二元子数组（哈希表）
+     * @param nums
+     * @param goal
+     * @return
+     */
+    public int numSubarraysWithSum_(int[] nums, int goal) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int sum = 0;
+        int ret = 0;
+        for (int num:nums){
+            map.put(sum, map.getOrDefault(sum,0)+1);
+            sum+=num;
+            ret+=map.getOrDefault(sum-goal,0);
+        }
+        return ret;
+    }
+
+    /**
+     * 1004. 最大连续1的个数 III
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int longestOnes(int[] nums, int k) {
+        int n = nums.length;
+        if(k == n){
+            return k;
+        }
+        int[] prefix = new int[n+1];
+        int ret = 0;
+        for (int i = 1; i <= n; i++){
+            prefix[i] = prefix[i-1]+nums[i-1];
+        }
+        for (int i = 0; i<n; i++){
+            for (int j=i+1; j<=n; j++){
+                if (prefix[j]-prefix[i]+k==j-i){
+                    ret = Math.max(ret,j-i);
+                }
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * 1004. 最大连续1的个数 III
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int longestOnes_(int[] nums, int k) {
+        int n = nums.length;
+        int[] prefix = new int[n+1];
+        int ret = 0;
+        for (int i = 1; i <= n; i++){
+            prefix[i] = prefix[i-1]+(1-nums[i-1]);
+        }
+        for (int i = 0; i<n; i++){
+            int left = binarySearch(prefix,prefix[i+1]-k);
+            ret = Math.max(ret, i-left+1);
+        }
+        return ret;
+    }
+
+    private int binarySearch(int[] prefix, int target){
+        int low = 0; int high = prefix.length-1;
+        while (low < high){
+            int mid = (high+low)/2;
+            if(prefix[mid] < target){
+                low=mid+1;
+            }else {
+                high=mid;
+            }
+        }
+        return low;
+    }
+
+
+    /**
+     * 1154. 一年中的第几天
+     * @param date
+     * @return
+     */
+    public int dayOfYear(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = null;
+        try {
+            date1 = sdf.parse(date);
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        String str = String.format("%tj", date1);
+        return Integer.parseInt(str);
+    }
+
+    /**
+     * 1154. 一年中的第几天
+     * @param date
+     * @return
+     */
+    public long dayOfYear_(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = null;
+        Calendar ca = null;
+        try {
+            date1 = sdf.parse(date);
+            ca = Calendar.getInstance();
+            ca.setTime(date1);
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return ca.get(Calendar.DAY_OF_YEAR);
     }
 }
