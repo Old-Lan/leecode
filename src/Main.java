@@ -28,9 +28,12 @@ public class Main {
 //        int[] ages = {20,30,100,110,120};
 //        int[] nums = {1,0,1,0,1};
 //        System.out.println(main.longestOnes_(nums,2));
-        String date = "2019-03-10";
-        System.out.println(main.dayOfYear_(date));
-
+//        String date = "2019-03-10";
+//        System.out.println(main.dayOfYear_(date));
+        String s = "krrgw";
+        String t = "zjxss";
+        int maxCost = 19;
+        System.out.println(main.equalSubstring(s,t,maxCost));
     }
 
     public Main(){
@@ -471,4 +474,283 @@ public class Main {
         }
         return ca.get(Calendar.DAY_OF_YEAR);
     }
+
+    /**
+     * 304. 二维区域和检索 - 矩阵不可变
+     */
+    class NumMatrix {
+        int[][] matrix;
+        int[][] pre_matrix_sum;
+        public NumMatrix(int[][] matrix) {
+            this.matrix = matrix;
+            int n = this.matrix.length;
+            int m = this.matrix[0].length;
+            pre_matrix_sum = new int[n+1][m+1];
+            for (int i = 1;i < n+1;i++){
+                for (int j = 1;j < m+1;j++){
+                    pre_matrix_sum[i][j] = pre_matrix_sum[i-1][j]+pre_matrix_sum[i][j-1]
+                            +this.matrix[i-1][j-1]-pre_matrix_sum[i-1][j-1];
+                }
+            }
+        }
+
+        public int sumRegion(int row1, int col1, int row2, int col2) {
+            return pre_matrix_sum[row2+1][col2+1]-pre_matrix_sum[row2+1][col1]
+                    -pre_matrix_sum[row1][col2+1]
+                    +pre_matrix_sum[row1][col1];
+        }
+    }
+
+
+    /**
+     * 303. 区域和检索 - 数组不可变
+     */
+    class NumArray {
+        int[] pre_nums;
+        public NumArray(int[] nums) {
+            int n = nums.length;
+            pre_nums = new int[n+1];
+            for (int i = 1;i < n+1;i++){
+                pre_nums[i] = nums[i-1]+pre_nums[i-1];
+            }
+        }
+
+        public int sumRange(int left, int right) {
+            return pre_nums[right]-pre_nums[left-1];
+        }
+    }
+
+    /**
+     * 363. 矩形区域不超过 K 的最大数值和
+     * @param matrix
+     * @param k
+     * @return
+     */
+    public int maxSumSubmatrix(int[][] matrix, int k) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int[][] pre_sum = new int[n+1][m+1];
+        for (int i = 1; i <= n; i++){
+            for (int j = 1; j <= m; j++){
+                pre_sum[i][j] = pre_sum[i-1][j]+pre_sum[i][j-1]-pre_sum[i-1][j-1]+matrix[i-1][j-1];
+            }
+        }
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i <= n;i++){
+            for (int j = 0; j <= m;j++){
+                for (int p = n; p > i;p--){
+                    for (int q = m; q > j;q--){
+                        int sum = pre_sum[p][q]-pre_sum[p][j]-pre_sum[i][q]+pre_sum[i][j];
+                        if(sum <= k){
+                            max = Math.max(max,sum);
+                        }
+                    }
+                }
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 437. 路径总和 III(递归)
+     */
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public int pathSum(TreeNode root, int targetSum) {
+        if(root == null){
+            return 0;
+        }
+        int path_nums = 0;
+        path_nums = rootSum(root, targetSum);
+        path_nums+=pathSum(root.left,targetSum);
+        path_nums+=pathSum(root.right,targetSum);
+
+        return path_nums;
+    }
+
+    public int rootSum(TreeNode root, int targetSum){
+        int nums = 0;
+        if(root == null){
+            return 0;
+        }
+        if(root.val == targetSum){
+            nums++;
+        }
+        nums += rootSum(root.left, targetSum-root.val);
+        nums += rootSum(root.right, targetSum-root.val);
+        return nums;
+    }
+
+    /**
+     * 437. 路径总和 III(前缀和)
+     * @param root
+     * @param targetSum
+     * @return
+     */
+    public int pathSum_(TreeNode root, int targetSum) {
+        if(root == null){
+            return 0;
+        }
+        HashMap<Long,Integer> prefix = new HashMap<>();
+        prefix.put(0L,1);
+        return dfs(root,prefix,0,targetSum);
+    }
+
+    public int dfs(TreeNode root,HashMap<Long,Integer> prefix, long curr, int targetSum){
+        if(root == null){
+            return 0;
+        }
+        curr += root.val;
+        int nums = prefix.getOrDefault(curr-targetSum,0);
+        prefix.put(curr, prefix.getOrDefault(curr,0)+1);
+        nums += dfs(root.left,prefix,curr,targetSum);
+        nums += dfs(root.right,prefix,curr,targetSum);
+        /**
+         * 一些细节：由于我们只能统计往下的路径，
+         * 但是树的遍历会同时搜索两个方向的子树。
+         * 因此我们应当在搜索完以某个节点为根的左右子树之后，
+         * 应当回溯地将路径总和从哈希表中删除，防止统计到跨越两个方向的路径。
+         */
+        prefix.put(curr, prefix.getOrDefault(curr,0)-1);
+        return nums;
+    }
+
+    /**
+     * 523. 连续的子数组和(超时)
+     * @param nums
+     * @param k
+     * @return
+     */
+    public boolean checkSubarraySum(int[] nums, int k) {
+        int n = nums.length;
+        int[] prefixs = new int[n+1];
+        for (int i = 1; i <=n; i++){
+            prefixs[i] += prefixs[i-1]+nums[i-1];
+        }
+        boolean flag = false;
+        for (int i=n;i>=2;i--){
+            for (int j=0;j<i;j++){
+                int subSum = prefixs[i]-prefixs[j];
+                if((i-j)>=2 && subSum%k==0){
+                    flag = true;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public boolean checkSubarraySum_(int[] nums, int k) {
+        int n = nums.length;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int[] prefixs = new int[n+1];
+        for (int i = 1; i <=n; i++){
+            prefixs[i] += prefixs[i-1]+nums[i-1];
+
+        }
+        for(int i = 0; i <=n; i++){
+            if(map.containsKey(prefixs[i]%k)){
+                if(i-map.get(prefixs[i]%k) >= 2) {
+                    return true;
+                }
+            }else {
+                map.put(prefixs[i]%k,i);
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 1208. 尽可能使字符串相等(滑动窗口)
+     */
+    public int equalSubstring(String s, String t, int maxCost) {
+        if(s == null || t == null){
+            return 0;
+        }
+        int m = s.length();
+        int sum = 0;
+        int max_len = 0;
+        for (int right=0, left = 0; left < m&&right < m;){
+            sum+=Math.abs(s.charAt(right)-t.charAt(right));
+            if(sum <= maxCost){
+                max_len = Math.max(max_len, right-left+1);
+                right++;
+            }else {
+                sum-=Math.abs(s.charAt(left)-t.charAt(left));
+                left++;
+                right++;
+            }
+        }
+        return max_len;
+    }
+
+    /**
+     * 1208. 尽可能使字符串相等（滑动窗口修改版）
+     */
+    public int equalSubstring_(String s, String t, int maxCost) {
+        if(s == null || t == null){
+            return 0;
+        }
+        int m = s.length();
+        int sum = 0;
+        int max_len = 0;
+        int left =0, right = 0;
+        while(right < m){
+            sum+=Math.abs(s.charAt(right)-t.charAt(right));
+            while (sum > maxCost){
+                sum-=Math.abs(s.charAt(left)-t.charAt(left));
+                left++;
+            }
+            max_len = Math.max(max_len, right-left+1);
+            right++;
+        }
+        return max_len;
+    }
+
+
+    /**
+     * 1208. 尽可能使字符串相等（前缀和+二分查找）
+     */
+    public int equalSubstring__(String s, String t, int maxCost) {
+        if(s == null || t == null){
+            return 0;
+        }
+        int n = s.length();
+        int max_len = 0;
+        int[] prefix_sum = new int[n+1];
+        for (int i = 1; i <=n; i++){
+            prefix_sum[i] = prefix_sum[i-1]+(s.charAt(i-1)-t.charAt(i-1));
+        }
+        for (int i = 1; i <=n; i++){
+            int left = binarySearch(prefix_sum, i, prefix_sum[i]-maxCost);
+            max_len = Math.max(max_len, i-left);
+        }
+        return max_len;
+    }
+
+    private int binarySearch(int[] prefix, int right, int target){
+        int low = 0;
+        int high = right;
+        while (low < high){
+            int mid = (low+high)/2;
+            if(prefix[mid] < target){
+                low = mid+1;
+            }else {
+                high = mid;
+            }
+        }
+        return low;
+    }
+
 }
