@@ -30,10 +30,13 @@ public class Main {
 //        System.out.println(main.longestOnes_(nums,2));
 //        String date = "2019-03-10";
 //        System.out.println(main.dayOfYear_(date));
-        String s = "krrgw";
-        String t = "zjxss";
-        int maxCost = 19;
-        System.out.println(main.equalSubstring(s,t,maxCost));
+//        String s = "krrgw";
+//        String t = "zjxss";
+//        int maxCost = 19;
+//        System.out.println(main.equalSubstring(s,t,maxCost));
+        int[] arr = {4,8,2,10};
+        int[][] queries = {{2,3},{1,3},{0,0},{0,3}};
+        System.out.println(Arrays.toString(main.xorQueries(arr, queries)));
     }
 
     public Main(){
@@ -751,6 +754,23 @@ public class Main {
             }
         }
         return low;
+    }
+
+    /**
+     * 1310. 子数组异或查询
+     */
+    public int[] xorQueries(int[] arr, int[][] queries) {
+        int n = arr.length;
+        int m = queries.length;
+        int[] prefix_xor = new int[n+1];
+        int[] results = new int[m];
+        for (int i = 1; i <= n; i++){
+            prefix_xor[i] = prefix_xor[i-1]^arr[i-1];
+        }
+        for (int i = 0; i < m; i++){
+            results[i] = prefix_xor[queries[i][1]+1]^prefix_xor[queries[i][0]];
+        }
+        return results;
     }
 
 }
