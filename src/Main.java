@@ -37,8 +37,8 @@ public class Main {
 //        int[] arr = {4,8,2,10};
 //        int[][] queries = {{2,3},{1,3},{0,0},{0,3}};
 //        System.out.println(Arrays.toString(main.xorQueries(arr, queries)));
-        int[] arr = {7,11,12,9,5,2,7,17,22};
-        System.out.println(main.countTriplets(arr));
+        int[] arr = {1,2};
+        System.out.println(main.sumOddLengthSubarrays(arr));
     }
 
     public Main(){
@@ -853,6 +853,27 @@ public class Main {
             }
         }
         return prefix;
+    }
+
+
+    /**
+     * 1588. 所有奇数长度子数组的和
+     */
+    public int sumOddLengthSubarrays(int[] arr) {
+        int n=arr.length;
+        int[] prefix=new int[n+1];
+        for (int i=1;i<=n;i++){
+            prefix[i]=prefix[i-1]+arr[i-1];
+        }
+        int sum=0;
+        for (int i=1;i<=n;i++){
+            for (int k=i;k<=n;k++){
+                if((k-i+1)%2!=0){
+                  sum+=prefix[k]-prefix[i-1];
+                }
+            }
+        }
+        return sum;
     }
 
 }
