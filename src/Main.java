@@ -34,9 +34,11 @@ public class Main {
 //        String t = "zjxss";
 //        int maxCost = 19;
 //        System.out.println(main.equalSubstring(s,t,maxCost));
-        int[] arr = {4,8,2,10};
-        int[][] queries = {{2,3},{1,3},{0,0},{0,3}};
-        System.out.println(Arrays.toString(main.xorQueries(arr, queries)));
+//        int[] arr = {4,8,2,10};
+//        int[][] queries = {{2,3},{1,3},{0,0},{0,3}};
+//        System.out.println(Arrays.toString(main.xorQueries(arr, queries)));
+        int[] arr = {7,11,12,9,5,2,7,17,22};
+        System.out.println(main.countTriplets(arr));
     }
 
     public Main(){
@@ -771,6 +773,70 @@ public class Main {
             results[i] = prefix_xor[queries[i][1]+1]^prefix_xor[queries[i][0]];
         }
         return results;
+    }
+
+    /**
+     * 1442. 形成两个异或相等数组的三元组数目（三重循环）
+     */
+    public int countTriplets(int[] arr) {
+        int n = arr.length;
+        int num=0;
+        int[] prefix_xor = new int[n+1];
+        for (int i=1;i<=n;i++){
+            prefix_xor[i]=prefix_xor[i-1]^arr[i-1];
+        }
+        for (int i=0;i<n-1;i++){
+            for (int j=i+1;j<n;j++){
+                for (int k=j;k<n;k++){
+                    if(prefix_xor[i]==prefix_xor[k+1]){
+                        num++;
+                    }
+                }
+            }
+        }
+        return num;
+    }
+
+    /**
+     * 1442. 形成两个异或相等数组的三元组数目（二重循环）
+     */
+    public int countTriplets_(int[] arr) {
+        int n = arr.length;
+        int num=0;
+        int[] prefix_xor = new int[n+1];
+        for (int i=1;i<=n;i++){
+            prefix_xor[i]=prefix_xor[i-1]^arr[i-1];
+        }
+        for (int i=0;i<n-1;i++){
+            for (int k=i+1;k<n;k++){
+                if(prefix_xor[i]==prefix_xor[k+1]){
+                    num++;
+                }
+            }
+        }
+        return num;
+    }
+
+    /**
+     * 1442. 形成两个异或相等数组的三元组数目（哈希表）
+     */
+    public int countTriplets__(int[] arr) {
+        int n = arr.length;
+        int num=0;
+        int[] prefix_xor = new int[n+1];
+        for (int i=1;i<=n;i++){
+            prefix_xor[i]=prefix_xor[i-1]^arr[i-1];
+        }
+        HashMap<Integer, Integer> cnt = new HashMap<>();
+        HashMap<Integer, Integer> total = new HashMap<>();
+        for (int k=0;k<n;++k){
+            if(cnt.containsKey(prefix_xor[k+1])){
+                num+=cnt.get(prefix_xor[k+1])*k-total.get(prefix_xor[k+1]);
+            }
+            cnt.put(prefix_xor[k],cnt.getOrDefault(prefix_xor[k],0)+1);
+            total.put(prefix_xor[k],total.getOrDefault(prefix_xor[k],0)+k);
+        }
+        return num;
     }
 
 }
