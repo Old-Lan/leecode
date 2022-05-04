@@ -37,8 +37,9 @@ public class Main {
 //        int[] arr = {4,8,2,10};
 //        int[][] queries = {{2,3},{1,3},{0,0},{0,3}};
 //        System.out.println(Arrays.toString(main.xorQueries(arr, queries)));
-        int[] arr = {1,2};
-        System.out.println(main.sumOddLengthSubarrays(arr));
+//        int[] arr = {1,2};
+        int[][] matrix = {{5,2},{1,6}};
+        System.out.println(main.kthLargestValue(matrix, 4));
     }
 
     public Main(){
@@ -875,5 +876,28 @@ public class Main {
         }
         return sum;
     }
+
+
+    /**
+     * 1738. 找出第 K 大的异或坐标值
+     */
+    public int kthLargestValue(int[][] matrix, int k) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int[][] prefix_m=new int[n+1][m+1];
+        int[] eyes=new int[n*m];
+        int index=0;
+        for (int i=1;i<=n;i++){
+            for (int j=1;j<=m;j++){
+                prefix_m[i][j]=prefix_m[i-1][j]^prefix_m[i][j-1]^prefix_m[i-1][j-1]^matrix[i-1][j-1];
+                eyes[index++]=prefix_m[i][j];
+            }
+        }
+        Arrays.sort(eyes);
+        return eyes[n*m-k];
+    }
+
+
+
 
 }
