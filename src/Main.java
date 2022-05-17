@@ -38,8 +38,10 @@ public class Main {
 //        int[][] queries = {{2,3},{1,3},{0,0},{0,3}};
 //        System.out.println(Arrays.toString(main.xorQueries(arr, queries)));
 //        int[] arr = {1,2};
-        int[][] matrix = {{5,2},{1,6}};
-        System.out.println(main.kthLargestValue(matrix, 4));
+//        int[][] matrix = {{5,2},{1,6}};
+//        System.out.println(main.kthLargestValue(matrix, 4));
+        int[] nums = {2,-5,1,-4,3,-2};
+        System.out.println(main.maxAbsoluteSum(nums));
     }
 
     public Main(){
@@ -896,6 +898,40 @@ public class Main {
         Arrays.sort(eyes);
         return eyes[n*m-k];
     }
+
+////TODO
+    /**
+     * 1744. 你能在你最喜欢的那天吃到你最喜欢的糖果吗？
+     */
+
+    /**
+     * 1749. 任意子数组和的绝对值的最大值（暴力超时）
+     */
+    public int maxAbsoluteSum(int[] nums) {
+        if(nums == null){
+            return 0;
+        }
+        int n = nums.length;
+        if (n==0){
+            return 0;
+        }
+        int result = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
+                int prefix_num = subnumsprefix_sum(i,j,nums);
+                result = Math.max(prefix_num, result);
+            }
+        }
+        return result;
+    }
+    private int subnumsprefix_sum(int i, int j, int[] nums){
+        int prefix_sum = 0;
+        for (int k = i; k <= j; k++){
+            prefix_sum = prefix_sum+nums[k];
+        }
+        return Math.abs(prefix_sum);
+    }
+
 
 
 
