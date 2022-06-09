@@ -1061,17 +1061,34 @@ public class Main {
     class Rectangle{
 
         int[][] rects = null;
+        int[] sum = null;
+        int n = 0;
         Random random = new Random();
         public Rectangle(int[][] rects) {
             this.rects = rects;
+            int n = rects.length;
+            sum = new int[n+1];
+            for (int i = 1; i <= n; i++){
+                sum[i] = sum[i-1]+(rects[i-1][2]-rects[i-1][0]+1)*(rects[i-1][3]-rects[i-1][1]+1);
+            }
         }
         public int[] pick() {
-            int n = rects.length;
-            int i = random.nextInt(n-1);
-            int[] rect = rects[i];
+            int target = random.nextInt(sum[n])+1;
+            int i = binarySearch(sum,target);
+            int[] rect = rects[i-1];
             int x = rect[0]+random.nextInt(rect[2]-rect[0]+1);
             int y = rect[1]+random.nextInt(rect[3]-rect[1]+1);
             return new int[]{x,y};
+        }
+
+        public int binarySearch(int[] arrs, int target){
+            int l = 0, r = n;
+            while (l < r) {
+                int mid = l + r >> 1;
+                if (arrs[mid] >= target) r = mid;
+                else l = mid + 1;
+            }
+            return r;
         }
     }
 
