@@ -49,7 +49,10 @@ public class Main {
 //                9911,9952,9974,9926,9920,9972,9983,9973,9917,9995,9973,9977,9947,9936,9975,9954,
 //                9932,9964,9972,9935,9946,9966}; int k = 3056;
 //        System.out.println(main.maxFrequency(nums,k));
-        System.out.println(1.0*0/0);
+//        System.out.println(1.0*0/0);
+//        int[] nums = {1}; int k = 0;
+//        System.out.println(main.subarraySum_prefix_hash(nums,k));
+//        System.out.println(new Random().nextInt(10));
     }
 
     public Main(){
@@ -970,6 +973,109 @@ public class Main {
         int[] b = {points[2][0]-points[0][0], points[2][1]-points[0][1]};
         return (a[0]*b[1]-b[0]*a[1]) != 0;
     }
+
+    /**
+     * 560. 和为 K 的子数组（暴力）
+     */
+    public int subarraySum(int[] nums, int k) {
+        int n = nums.length;
+        int count = 0;
+        for (int l = 0; l < n; l++){
+            for (int r = l; r < n; r++){
+                int sum = 0;
+                for (int i = l; i <= r; i++){
+                    sum+=nums[i];
+                }
+                if(sum == k){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 560. 和为 K 的子数组（前缀和）
+     */
+    public int subarraySum_prefix(int[] nums, int k) {
+        int n = nums.length;
+        int count = 0;
+        int[] prefix = new int[n+1];
+        for (int i = 1; i <= n; i++){
+            prefix[i]=prefix[i-1]+nums[i-1];
+        }
+        for (int l = 0; l < n; l++){
+            for (int r = l+1; r <= n; r++){
+                int sum = prefix[r]-prefix[l];
+                if(sum ==k){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 560. 和为 K 的子数组（枚举）
+     */
+    public int subarraySum_enum(int[] nums, int k) {
+        int n = nums.length;
+        int count = 0;
+        for (int i = 0; i < n; i++){
+            int sum = 0;
+            for (int j = i; j >=0; j--){
+                sum+=nums[j];
+                if(sum == k){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 560. 和为 K 的子数组（前缀和+哈希表）
+     */
+    public int subarraySum_prefix_hash(int[] nums, int k) {
+        int n = nums.length;
+        int count = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int[] prefix = new int[n+1];
+        for (int i = 1; i <= n; i++){
+            prefix[i]=prefix[i-1]+nums[i-1];
+        }
+        map.put(0,1);
+        for (int r = 1; r <= n; r++){
+            if (map.containsKey(prefix[r]-k)){
+                count+=map.get(prefix[r]-k);
+            }
+            map.put(prefix[r], map.getOrDefault(prefix[r],0)+1);
+        }
+        return count;
+    }
+
+
+    /**
+     * 497. 非重叠矩形中的随机点
+     */
+    class Rectangle{
+
+        int[][] rects = null;
+        Random random = new Random();
+        public Rectangle(int[][] rects) {
+            this.rects = rects;
+        }
+        public int[] pick() {
+            int n = rects.length;
+            int i = random.nextInt(n-1);
+            int[] rect = rects[i];
+            int x = rect[0]+random.nextInt(rect[2]-rect[0]+1);
+            int y = rect[1]+random.nextInt(rect[3]-rect[1]+1);
+            return new int[]{x,y};
+        }
+    }
+
+
 
 
 
