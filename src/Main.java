@@ -53,6 +53,8 @@ public class Main {
 //        int[] nums = {1}; int k = 0;
 //        System.out.println(main.subarraySum_prefix_hash(nums,k));
 //        System.out.println(new Random().nextInt(10));
+        int[][] grid = {{1,2,5},{3,2,1}};
+        System.out.println(main.maxValue(grid));
     }
 
     public Main(){
@@ -1090,6 +1092,24 @@ public class Main {
             }
             return r;
         }
+    }
+
+    /**
+     * 剑指 Offer 47. 礼物的最大价值
+     */
+    public int maxValue(int[][] grid) {
+        if(grid.length == 0) return 0;
+        int m = grid.length;
+        int n = grid[0].length;
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if (i == 0 && j == 0) continue;
+                if (i == 0) grid[i][j]=grid[i][j-1]+grid[i][j];
+                else if (j == 0) grid[i][j]=grid[i-1][j]+grid[i][j];
+                else grid[i][j]=grid[i][j]+Math.max(grid[i-1][j], grid[i][j-1]);
+            }
+        }
+        return grid[m-1][n-1];
     }
 
 
