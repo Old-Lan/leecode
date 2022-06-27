@@ -53,8 +53,13 @@ public class Main {
 //        int[] nums = {1}; int k = 0;
 //        System.out.println(main.subarraySum_prefix_hash(nums,k));
 //        System.out.println(new Random().nextInt(10));
-        int[][] grid = {{1,2,5},{3,2,1}};
-        System.out.println(main.maxValue(grid));
+//        int[][] grid = {{1,2,5},{3,2,1}};
+//        System.out.println(main.maxValue(grid));
+//        String s = "AAAAAAAAAAA";
+//        System.out.println(main.findRepeatedDnaSequences(s));
+        int num = 2;
+        System.out.println(Integer.toBinaryString(num));
+        System.out.println(Integer.toBinaryString((num << 2) | 2 & ((1 << 20) - 1)));
     }
 
     public Main(){
@@ -1110,6 +1115,26 @@ public class Main {
             }
         }
         return grid[m-1][n-1];
+    }
+
+
+    /**
+     * 187. 重复的DNA序列(哈希表)
+     */
+    public List<String> findRepeatedDnaSequences(String s) {
+        if(s == null || s.length() <= 10) return new ArrayList<>();
+        int n = s.length();
+        HashMap<String, Integer> map = new HashMap<>();
+        for (int i = 0; i+10 <= n; i++){
+            map.put(s.substring(i, i+10), map.getOrDefault(s.substring(i, i+10), 0)+1);
+        }
+        List<String> list = new ArrayList<String>();
+        for (Map.Entry<String, Integer> entry : map.entrySet()){
+            if(entry.getValue() > 1){
+                list.add(entry.getKey());
+            }
+        }
+        return list;
     }
 
 
