@@ -1181,6 +1181,50 @@ public class Main {
     }
 
 
+    /**
+     * 324. 摆动排序 II
+     */
+    public void wiggleSort(int[] nums) {
+        int n = nums.length;
+        int x = (n+1)/2;
+        Arrays.sort(nums);
+        int[] numsb = nums.clone();
+        for (int i = 0,j=x-1, k=n-1; i < n; i+=2, k--, j--){
+            nums[i] = numsb[j];
+            if(i+1 < n){
+                nums[i+1]=numsb[k];
+            }
+        }
+    }
+
+    /**
+     * 1252. 奇数值单元格的数目
+     */
+    public int oddCells(int m, int n, int[][] indices) {
+        int[][] matrix = new int[m][n];
+        int len = indices.length;
+        for (int i = 0; i < len; i++){
+            int row = indices[i][0];
+            int col = indices[i][1];
+            for (int j = 0; j < n; j++){
+                matrix[row][j]++;
+            }
+            for (int k = 0; k < m; k++){
+                matrix[k][col]++;
+            }
+        }
+        int count = 0;
+        for (int i = 0; i < m; i++){
+            for (int j =0; j < n; j++){
+                if (matrix[i][j]%2!=0){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+
 
 
 
