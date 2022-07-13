@@ -61,9 +61,13 @@ public class Main {
 //        System.out.println(Integer.toBinaryString(num));
 //        System.out.println(Integer.toBinaryString((num << 2) | 2 & ((1 << 20) - 1)));
 //        System.out.println(main.isPalindromicSubsequences("aba"));
-        String s = "abcdabcdabcdabcdabcdabcdabcdabcddcbadcbadcbadcbadcbadcbadcbadcba";
-        System.out.println(main.countPalindromicSubsequences(s));
-        System.out.println(Long.MAX_VALUE);
+//        String s = "abcdabcdabcdabcdabcdabcdabcdabcddcbadcbadcbadcbadcbadcbadcbadcba";
+//        System.out.println(main.countPalindromicSubsequences(s));
+//        System.out.println(Long.MAX_VALUE);
+//        int[] asteroids = {5, 10, -5};
+//        System.out.println(Arrays.toString(main.asteroidCollision(asteroids)));
+        String[] words = {"leetcoder","leetcode","od","hamlet","am"};
+        System.out.println(main.stringMatching(words));
     }
 
     public Main(){
@@ -1222,6 +1226,52 @@ public class Main {
             }
         }
         return count;
+    }
+
+    /**
+     * 735. 行星碰撞
+     */
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> stack = new Stack<>();
+        for (int aster: asteroids){
+            boolean alive = true;
+            while (alive && aster < 0 && !stack.isEmpty()&& stack.peek() > 0){
+                alive = stack.peek() < -aster;
+                if (stack.peek() <= -aster){
+                    stack.pop();
+                }
+            }
+            if (alive){
+                stack.push(aster);
+            }
+        }
+        int len = stack.size();
+        int[] results = new int[len];
+        for (int i = len-1; i >= 0; i--){
+            results[i] = stack.pop();
+        }
+        return results;
+    }
+
+    public boolean isSameSigns(int a, int b){
+        return (a ^ b >>> 31) == 0;
+    }
+
+    /**
+     * 1408. 数组中的字符串匹配
+     */
+    public List<String> stringMatching(String[] words) {
+        int len = words.length;
+        Set<String> results = new HashSet<>();
+        for (int i = 0; i < len; i++){
+            for (int j = 0; j < len; j++){
+                if (j == i) continue;
+                if (words[i].contains(words[j])){
+                    results.add(words[j]);
+                }
+            }
+        }
+        return new ArrayList<>(results);
     }
 
 
