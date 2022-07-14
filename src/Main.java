@@ -1,3 +1,4 @@
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -66,8 +67,15 @@ public class Main {
 //        System.out.println(Long.MAX_VALUE);
 //        int[] asteroids = {5, 10, -5};
 //        System.out.println(Arrays.toString(main.asteroidCollision(asteroids)));
-        String[] words = {"leetcoder","leetcode","od","hamlet","am"};
-        System.out.println(main.stringMatching(words));
+//        String[] words = {"leetcoder","leetcode","od","hamlet","am"};
+//        System.out.println(main.stringMatching(words));
+//        System.out.println(Integer.toString(Integer.MAX_VALUE).length());
+//        String str = new String(Integer.MAX_VALUE);
+//        System.out.println(main.rotation("01234", 2));
+//        char c = '9';
+//        System.out.println((c+'4'));
+
+
     }
 
     public Main(){
@@ -1272,6 +1280,58 @@ public class Main {
             }
         }
         return new ArrayList<>(results);
+    }
+
+    /**
+     * 745. 前缀和后缀搜索
+     */
+    class WordFilter {
+        Map<String,Integer> dictionary;
+        public WordFilter(String[] words) {
+            dictionary = new HashMap<>();
+            for (int i = 0; i < words.length; i++){
+                String word = words[i];
+                int m = word.length();
+                for (int prefixLength = 1; prefixLength <= m; prefixLength++){
+                    for (int suffixLength = 1; suffixLength <= m; suffixLength++){
+                        dictionary.put(word.substring(0,prefixLength) + "#" +word.substring(m-suffixLength), i);
+                    }
+                }
+            }
+        }
+
+        public int f(String pref, String suff) {
+            return dictionary.getOrDefault(pref+"#"+suff, -1);
+        }
+    }
+
+    /**
+     * 1625. 执行操作后字典序最小的字符串
+     */
+    public String findLexSmallestString(String s, int a, int b) {
+        System.out.println(rotation(s,b));
+        return "";
+    }
+
+    private String rotation(String s, int b){
+        char[] chars = s.toCharArray();
+        int n = chars.length;
+        char[] chars1 = new char[n];
+        for (int i = 0; i < n; i++){
+            chars1[(i+b)%n] = chars[i];
+        }
+        return new String(chars1);
+    }
+
+    private String accumulation(String s, int a){
+        int n = s.length();
+        char[] chars = new char[n];
+        for (int i = 1; i < n; i+=2){
+            char c = chars[i];
+            int num = (int)(c-'0');
+            chars[i] = (char) ((a+num)%10 + '0');
+        }
+        return new String(chars);
     }
 
 
