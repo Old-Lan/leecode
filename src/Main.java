@@ -1334,6 +1334,83 @@ public class Main {
         return new String(chars);
     }
 
+    /**
+     * 558. 四叉树交集
+     */
+    class QuadNode {
+        public boolean val;
+        public boolean isLeaf;
+        public QuadNode topLeft;
+        public QuadNode topRight;
+        public QuadNode bottomLeft;
+        public QuadNode bottomRight;
+
+        public QuadNode() {}
+        public QuadNode(boolean _val, boolean _isLeaf){
+            val=_val;
+            isLeaf = _isLeaf;
+        }
+
+        public QuadNode(boolean _val,boolean _isLeaf,QuadNode _topLeft,QuadNode _topRight,QuadNode _bottomLeft,QuadNode _bottomRight) {
+            val = _val;
+            isLeaf = _isLeaf;
+            topLeft = _topLeft;
+            topRight = _topRight;
+            bottomLeft = _bottomLeft;
+            bottomRight = _bottomRight;
+        }
+    };
+    public QuadNode intersect(QuadNode quadTree1, QuadNode quadTree2) {
+        if(quadTree1.isLeaf){
+            if (quadTree1.val){
+                return new QuadNode(true, true);
+            }
+            return new QuadNode(quadTree2.val, quadTree2.isLeaf, quadTree2.topLeft, quadTree2.topRight, quadTree2.bottomLeft, quadTree2.bottomRight);
+        }
+        if (quadTree2.isLeaf){
+            intersect(quadTree2, quadTree1);
+        }
+        QuadNode node1 = intersect(quadTree1.topLeft, quadTree2.topLeft);
+        QuadNode node2 = intersect(quadTree1.topRight, quadTree2.topRight);
+        QuadNode node3 = intersect(quadTree1.bottomLeft, quadTree2.bottomLeft);
+        QuadNode node4 = intersect(quadTree1.bottomRight, quadTree2.bottomRight);
+        if (node1.isLeaf && node2.isLeaf && node3.isLeaf && node4.isLeaf
+        && node1.val==node2.val && node1.val==node3.val && node1.val==node4.val){
+            return new QuadNode(node1.val, true);
+        }
+        return new QuadNode(false, false, node1, node2, node3, node4);
+    }
+
+
+    /**
+     * 剑指 Offer II 041. 滑动窗口的平均值
+     */
+    class MovingAverage {
+        int[] numbers;
+        int index;
+        int size;
+        int sum = 0;
+
+        /** Initialize your data structure here. */
+        public MovingAverage(int size) {
+            numbers = new int[size];
+            this.size = size;
+        }
+
+        public double next(int val) {
+            if (index >= size){
+                sum-=numbers[index%size];
+            }
+            numbers[index%size] = val;
+            sum+=val;
+            index++;
+            if (index >= size){
+                return (double) sum/size;
+            }
+            return (double) sum/index;
+        }
+    }
+
 
 
 
