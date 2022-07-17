@@ -74,6 +74,8 @@ public class Main {
 //        System.out.println(main.rotation("01234", 2));
 //        char c = '9';
 //        System.out.println((c+'4'));
+        int[] nums = {5,4,0,3,1,6,2};
+        System.out.println(main.arrayNesting(nums));
 
 
     }
@@ -1409,6 +1411,48 @@ public class Main {
             }
             return (double) sum/index;
         }
+    }
+
+    /**
+     * 565. 数组嵌套(超时)
+     */
+    public int arrayNesting(int[] nums) {
+        int n = nums.length;
+        int result = 0;
+        for (int i = 0; i < n;i++){
+            List<Integer> list = new ArrayList<>();
+            addNesting(list, nums, i);
+            result = Math.max(result, list.size());
+        }
+        return result;
+    }
+
+    private void addNesting(List<Integer> list, int[] nums, int i){
+        if (list.contains(nums[i])){
+            return;
+        }
+        list.add(nums[i]);
+        int index = nums[i];
+        addNesting(list, nums, index);
+    }
+
+    /**
+     * 565. 数组嵌套(图)
+     */
+    public int arrayNesting_(int[] nums) {
+        int n = nums.length;
+        int result = 0;
+        for (int i = 0; i < n;i++){
+            int count = 0;
+            while (nums[i] < n){
+                int num = nums[i];
+                nums[i] = n;
+                i = num;
+                count++;
+            }
+            result = Math.max(result, count);
+        }
+        return result;
     }
 
 
