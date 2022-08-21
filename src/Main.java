@@ -74,9 +74,18 @@ public class Main {
 //        System.out.println(main.rotation("01234", 2));
 //        char c = '9';
 //        System.out.println((c+'4'));
-        int[] nums = {5,4,0,3,1,6,2};
-        System.out.println(main.arrayNesting(nums));
-
+//        int[] nums = {5,4,0,3,1,6,2};
+//        System.out.println(main.arrayNesting(nums));
+//        String sentence = "love errichto jonathan dumb";
+//        String searchWord = "dumb";
+//        System.out.println(main.isPrefixOfWord(sentence, searchWord));
+//        ListNode listNode3 = new Main.ListNode(3);
+//        ListNode listNode2 = new Main.ListNode(4,listNode3);
+        ListNode listNode1 = new Main.ListNode(0);
+//        ListNode listNode6 = new Main.ListNode(4);
+        ListNode listNode5 = new Main.ListNode(3);
+        ListNode listNode4 = new Main.ListNode(7,listNode5);
+        System.out.println(main.addTwoNumbers(listNode1, listNode4));
 
     }
 
@@ -1569,6 +1578,90 @@ public class Main {
             booked.add(new int[]{start, end});
             return true;
         }
+    }
+
+    /**
+     * 1455. 检查单词是否为句中其他单词的前缀
+     * @param sentence
+     * @param searchWord
+     * @return
+     */
+    public int isPrefixOfWord(String sentence, String searchWord) {
+        if(sentence == null || sentence.equals("")) return -1;
+        if (searchWord == null || searchWord.equals("")) return -1;
+        String[] words = sentence.split(" ");
+        int len = searchWord.length();
+        for (int i = 0; i < words.length; i++){
+            if (words[i].length() >= len){
+                String preWord = words[i].substring(0,len);
+                if (preWord.equals(searchWord)){
+                    return i+1;
+                }
+            }
+        }
+        return -1;
+    }
+
+
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+        ListNode() {}
+        ListNode(int val) { this.val = val; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    }
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode l3 = l1;
+        if(l1 == null){
+            return l2;
+        }
+        if(l2 == null){
+            return l1;
+        }
+        int tmp = 0;
+        ListNode pre = l1;
+        while (l1 != null && l2 != null){
+            pre = l1;
+            l1.val+=tmp;
+            if(l1.val+l2.val>=10){
+                l1.val = (l2.val+l1.val)-10;
+                tmp = 1;
+            }else{
+                l1.val = l1.val+l2.val;
+                tmp = 0;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        while (l2 != null){
+            pre.next = l2;
+            if (l2.val+tmp >= 10){
+                l2.val = (l2.val+tmp)-10;
+                tmp = 1;
+            }else {
+                l2.val = l2.val+tmp;
+                tmp = 0;
+            }
+            pre = l2;
+            l2 = l2.next;
+        }
+        while (l1 != null){
+            pre = l1;
+            if (l1.val+tmp >= 10){
+                l1.val = (l1.val+tmp)-10;
+                tmp = 1;
+            }else {
+                l1.val = l1.val+tmp;
+                tmp = 0;
+            }
+            l1 = l1.next;
+        }
+        if (tmp != 0){
+            pre.next = new ListNode(tmp);
+        }
+        return l3;
+
     }
 
 
