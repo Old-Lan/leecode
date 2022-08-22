@@ -1603,7 +1603,9 @@ public class Main {
     }
 
 
-
+    /**
+     * 2. 两数相加
+     */
     public static class ListNode {
         int val;
         ListNode next;
@@ -1664,6 +1666,72 @@ public class Main {
 
     }
 
+    /**
+     * 655. 输出二叉树
+     * @param root
+     * @return
+     */
+    public List<List<String>> printTree(TreeNode root) {
+        //格式化布局
+        ///计算树高
+        int height = calDepth(root);
+        ///行m
+        int m = height+1;
+        ///列n
+        int n = (1 << (height+1))-1;
+        ///初始化
+        List<List<String>> res = new ArrayList<List<String>>();
+        for (int i = 0; i < m; i++){
+            List<String> row = new ArrayList<>();
+            for (int j = 0; j < n; j++){
+                row.add("");
+            }
+            res.add(row);
+        }
+        dfs(res, root, 0, (n-1)/2, height);
+        return res;
+    }
+
+    public int calDepth(TreeNode root){
+        int h = 0;
+        if(root.left != null){
+            h = Math.max(h, calDepth(root.left)+1);
+        }
+        if(root.right != null){
+            h = Math.max(h, calDepth(root.right)+1);
+        }
+        return h;
+    }
+
+    public void dfs(List<List<String>> res, TreeNode root, int r, int c, int height){
+        res.get(r).set(c, Integer.toString(root.val));
+        if (root.left != null){
+            dfs(res, root.left, r+1, c-(1 << height-r-1), height);
+        }
+        if (root.right != null){
+            dfs(res, root.right, r+1, c+(1 << height-r-1), height);
+        }
+    }
+
+    /**
+     * 3. 无重复字符的最长子串
+     */
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        Set<Character> set = new HashSet<>();
+        int rk = -1, ans = 0;
+        for (int i = 0; i < n; i++){
+            if (i != 0){
+                set.remove(s.charAt(i-1));
+            }
+            while (rk+1 < n && !set.contains(s.charAt(rk+1))){
+                set.add(s.charAt(rk+1));
+                rk++;
+            }
+            ans = Math.max(ans, rk-i+1);
+        }
+        return ans;
+    }
 
 
 
