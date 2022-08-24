@@ -81,11 +81,16 @@ public class Main {
 //        System.out.println(main.isPrefixOfWord(sentence, searchWord));
 //        ListNode listNode3 = new Main.ListNode(3);
 //        ListNode listNode2 = new Main.ListNode(4,listNode3);
-        ListNode listNode1 = new Main.ListNode(0);
+//        ListNode listNode1 = new Main.ListNode(0);
 //        ListNode listNode6 = new Main.ListNode(4);
-        ListNode listNode5 = new Main.ListNode(3);
-        ListNode listNode4 = new Main.ListNode(7,listNode5);
-        System.out.println(main.addTwoNumbers(listNode1, listNode4));
+//        ListNode listNode5 = new Main.ListNode(3);
+//        ListNode listNode4 = new Main.ListNode(7,listNode5);
+//        System.out.println(main.addTwoNumbers(listNode1, listNode4));
+//        int[] target = {3,7,9};
+//        int[] arr = {3,7,11};
+//        System.out.println(main.canBeEqual(target, arr));
+        String s = "a";
+        System.out.println(main.longestPalindrome(s));
 
     }
 
@@ -1731,6 +1736,89 @@ public class Main {
             ans = Math.max(ans, rk-i+1);
         }
         return ans;
+    }
+
+
+    /**
+     * 1460. 通过翻转子数组使两个数组相等
+     */
+    public boolean canBeEqual(int[] target, int[] arr) {
+        Arrays.sort(target);
+        Arrays.sort(arr);
+        int n = target.length;
+        for (int i = 0; i < n; i++){
+            if (target[i] != arr[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     *5. 最长回文子串(暴力 超时)
+     */
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        String ans = "";
+        for (int i = 1; i <= n; i++){
+            for (int j = 0; j < n-i+1; j++){
+                String subString = s.substring(j, j+i);
+                if (isPalindrome(subString)){
+                    ans = subString;
+                }
+            }
+        }
+        return ans;
+    }
+
+    public boolean isPalindrome(String s){
+        int n = s.length();
+        for (int i = 0; i < n/2; i++){
+            if (s.charAt(i) != s.charAt(n-1-i)) return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * 5. 最长回文子串 (动态规划：P(i,j) = P(i+1, j-1) ^ (Si == Sj))
+     */
+    public String longestPalindrome_dp(String s) {
+        int len = s.length();
+        if (len < 2){
+            return s;
+        }
+        int maxLen = 1;
+        int begin = 0;
+        boolean[][] dp = new boolean[len][len];
+        for (int i = 0; i < len; i++){
+            dp[i][i] = true;
+        }
+
+        char[] charArray = s.toCharArray();
+        for (int L = 2; L <= len; L++){
+            for (int i = 0; i < len; i++){
+                int j = L+i-1;
+                if(j >= len){
+                    break;
+                }
+                if (charArray[i] != charArray[j]){
+                    dp[i][j] = false;
+                }else {
+                    if(j - i < 3){
+                        dp[i][j] = true;
+                    }else {
+                        dp[i][j] = dp[i+1][j-1];
+                    }
+                }
+
+                if (dp[i][j] && j-i+1 > maxLen){
+                    maxLen = j-i+1;
+                    begin = 1;
+                }
+            }
+        }
+        return s.substring(begin, begin+maxLen);
     }
 
 
