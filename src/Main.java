@@ -1821,6 +1821,46 @@ public class Main {
         return s.substring(begin, begin+maxLen);
     }
 
+    /**
+     * 946. 验证栈序列
+     */
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        int n = pushed.length;
+        for (int i = 0, j = 0; i < n; i++){
+            stack.push(pushed[i]);
+            while (!stack.isEmpty() && stack.peek() == popped[j]){
+                stack.pop();
+                j++;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    /**
+     * 998. 最大二叉树 II
+     */
+    public TreeNode insertIntoMaxTree(TreeNode root, int val) {
+        TreeNode parent = null;
+        TreeNode cur = root;
+        while (cur != null){
+            if (val > cur.val){
+                if (parent == null){
+                    return new TreeNode(val, root, null);
+                }else {
+                    TreeNode node = new TreeNode(val, cur, null);
+                    parent.right = node;
+                    return root;
+                }
+            }else {
+                parent = cur;
+                cur = cur.right;
+            }
+        }
+        parent.right = new TreeNode(val);
+        return root;
+    }
+
 
 
 
