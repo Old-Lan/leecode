@@ -89,8 +89,10 @@ public class Main {
 //        int[] target = {3,7,9};
 //        int[] arr = {3,7,11};
 //        System.out.println(main.canBeEqual(target, arr));
-        String s = "a";
-        System.out.println(main.longestPalindrome(s));
+//        String s = "a";
+//        System.out.println(main.longestPalindrome(s));
+        int[] nums = {1,1,2,2,2,3};
+        System.out.println(Arrays.toString(main.frequencySort(nums)));
 
     }
 
@@ -1859,6 +1861,30 @@ public class Main {
         }
         parent.right = new TreeNode(val);
         return root;
+    }
+
+    /**
+     * 1636. 按照频率将数组升序排序
+     */
+    public int[] frequencySort(int[] nums) {
+        int n = nums.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++){
+            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+        }
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < n; i++){
+            list.add(nums[i]);
+        }
+        Collections.sort(list,(a,b)->{
+            int countA = map.get(a),countB = map.get(b);
+            return countA != countB ? countA - countB : b - a;
+        });
+        int[] ans = new int[n];
+        for (int i = 0; i < n; i++){
+            ans[i] = list.get(i);
+        }
+        return ans;
     }
 
 
