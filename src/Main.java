@@ -91,8 +91,21 @@ public class Main {
 //        System.out.println(main.canBeEqual(target, arr));
 //        String s = "a";
 //        System.out.println(main.longestPalindrome(s));
-        int[] nums = {1,1,2,2,2,3};
-        System.out.println(Arrays.toString(main.frequencySort(nums)));
+//        int[] nums = {1,1,2,2,2,3};
+//        System.out.println(Arrays.toString(main.frequencySort(nums)));
+//        int[] nums = {4,3,2,3,5,2,1};
+//        int k = 4;
+//        System.out.println(main.canPartitionKSubsets(nums,k));
+//        int[] nums = {1,2,3,4,5,6};
+//        int key = 3;
+//
+//        System.out.println(main.binarySearch4Part(nums,key));
+//        System.out.println(main.isPalindrome(121));
+
+//        System.out.println(main.romanToInt("MMMCCCXXXIII"));
+        int[] nums = {2,2};
+        int target = 2;
+        System.out.println(Arrays.toString(main.searchRange(nums, target)));
 
     }
 
@@ -1887,6 +1900,171 @@ public class Main {
         return ans;
     }
 
+    /**
+     * 698. 划分为k个相等的子集
+     */
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int n = nums.length;
+        int sum = 0;
+        for (int i = 0; i < n; i++){
+            sum+=nums[i];
+        }
+        if(sum % k != 0){
+            return false;
+        }
+        Arrays.sort(nums);
+        boolean[] used = new boolean[n];
+        int part = sum/k;
+        for (int i = 0; i < n; i++){
+            used[i] = true;
+            int index = binarySearch4Part(nums,part-nums[i],used);
+            if (index == -1){
+                return false;
+            }
+            used[index] = true;
+        }
+        return true;
+    }
+
+    private int binarySearch4Part(int[] nums,int key,boolean[] used){
+        int start = 0;
+        int end = nums.length;
+        while (start <= end){
+            int mid = (end+start)/2;
+            if(nums[mid] == key && !used[mid]){
+                return mid;
+            }else if(nums[mid] < key) {
+               start = mid+1;
+            }else {
+                end = mid-1;
+            }
+        }
+        return -1;
+    }
+
+
+    /**
+     * 9. 回文数
+     */
+    public boolean isPalindrome(int x) {
+        if(x < 0 || (x % 10 == 0 && x != 0)) return false;
+        int revertedNumber = 0;
+        while (x > revertedNumber){
+            revertedNumber = revertedNumber * 10 + x % 10;
+            x /= 10;
+        }
+        return x == revertedNumber || x == revertedNumber/10;
+    }
+
+    /**
+     * 13. 罗马数字转整数
+     */
+    public int romanToInt(String s) {
+        int res = 0;
+        Map<Character,Integer> map = new HashMap<>();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        int n = s.length();
+        for (int i = 0; i < n; i++){
+            int value = map.get(s.charAt(i));
+            if (i < n-1 && value < map.get(s.charAt(i+1))){
+                res-=map.get(s.charAt(i));
+            }else{
+                res+=map.get(s.charAt(i));
+            }
+        }
+        return res;
+    }
+
+
+    public int arraySign(int[] nums) {
+        int product = 1;
+        for (int num : nums) {
+            if ( num == 0) return 0;
+            product *= Integer.compare(num, 0);
+        }
+        return Integer.compare(product, 0);
+    }
+
+    /**
+     * 704. 二分查找
+     */
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length-1;
+        while (left <= right){
+            int mid = (left+right)/2;
+            if (nums[mid] < target){
+                left = mid+1;
+            }else if (nums[mid] > target){
+                right = mid-1;
+            }else {
+                return mid;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 35. 搜索插入位置
+     */
+    public int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length-1;
+        while (left <= right){
+            int mid = (left+right)/2;
+            if (nums[mid] < target){
+                left = mid+1;
+            }else if (nums[mid] > target){
+                right = mid-1;
+            }else {
+                return mid;
+            }
+        }
+        return left;
+    }
+
+    /**
+     * 34. 在排序数组中查找元素的第一个和最后一个位置(暴力)
+     */
+    public int[] searchRange(int[] nums, int target) {
+        int n = nums.length;
+        int[] res = new int[2];
+        int position = -1;
+        for (int i = 0; i < n; i++){
+            if (nums[i] == target){
+                position = i;
+                break;
+            }
+        }
+        if (position == -1){
+            return new int[]{-1,-1};
+        }
+        res[0] = position;
+        while (position < n-1){
+            if (nums[position+1] == target){
+                position += 1;
+            }else{
+                break;
+            }
+        }
+        res[1] = position;
+        return res;
+    }
+
+
+    /**
+     * 34. 在排序数组中查找元素的第一个和最后一个位置(二分查找)
+     */
+    //TODO 二分查找
+    public int[] searchRange_(int[] nums, int target) {
+        return null;
+    }
 
 
 
