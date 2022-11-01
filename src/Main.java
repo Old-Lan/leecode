@@ -103,9 +103,9 @@ public class Main {
 //        System.out.println(main.isPalindrome(121));
 
 //        System.out.println(main.romanToInt("MMMCCCXXXIII"));
-        int[] nums = {2,2};
+        int[] nums = {2};
         int target = 2;
-        System.out.println(Arrays.toString(main.searchRange(nums, target)));
+        System.out.println(Arrays.toString(main.searchRange_(nums, target)));
 
     }
 
@@ -2061,9 +2061,56 @@ public class Main {
     /**
      * 34. 在排序数组中查找元素的第一个和最后一个位置(二分查找)
      */
-    //TODO 二分查找
     public int[] searchRange_(int[] nums, int target) {
-        return null;
+        int left = getLeftBorder(nums,target);
+        int right = getRightBorder(nums,target);
+        if (left == -2 || right == -2) return new int[]{-1,-1};
+        if (right - left > 1) return new int[]{left+1,right-1};
+        return new int[]{-1,-1};
+    }
+
+    /**
+     * left找到的是最右target位置+1
+     * @param nums
+     * @param target
+     * @return
+     */
+    private int getRightBorder(int[] nums, int target){
+        int left = 0;
+        int right = nums.length - 1;
+        int rightBorder = -2;
+        while (left <= right){
+            int mid = (left+right)/2;
+            if(nums[mid] > target){
+                right = mid - 1;
+            }else {
+                left = mid + 1;
+                rightBorder = left;//直到找到
+            }
+        }
+        return rightBorder;
+    }
+
+    /**
+     * right找到的是target最左位置-1
+     * @param nums
+     * @param target
+     * @return
+     */
+    private int getLeftBorder(int[] nums, int target){
+        int left = 0;
+        int right = nums.length - 1;
+        int leftBorder = -2;
+        while (left <= right){
+            int mid = (left+right)/2;
+            if(nums[mid] < target){
+                left = mid + 1;
+            }else {
+                right = mid - 1;
+                leftBorder = right;
+            }
+        }
+        return leftBorder;
     }
 
 
