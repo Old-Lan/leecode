@@ -103,9 +103,13 @@ public class Main {
 //        System.out.println(main.isPalindrome(121));
 
 //        System.out.println(main.romanToInt("MMMCCCXXXIII"));
-        int[] nums = {2};
-        int target = 2;
-        System.out.println(Arrays.toString(main.searchRange_(nums, target)));
+//        int[] nums = {2};
+//        int target = 2;
+//        System.out.println(Arrays.toString(main.searchRange_(nums, target)));
+//        int x = 2147395599;
+//        System.out.println(main.mySqrt_(x));
+        int num = 16;
+        System.out.println(main.isPerfectSquare(14));
 
     }
 
@@ -2113,6 +2117,57 @@ public class Main {
         return leftBorder;
     }
 
+
+    /**
+     * 69. x 的平方根(牛顿迭代法)
+     */
+    public int mySqrt(int x) {
+        if (x == 0) return 0;
+        double x0 = x;
+        while (true){
+            double xi = 0.5 * (x0 + (double) x /x0);
+            if (Math.abs(x0 - xi) < 1e-7){
+                break;
+            }
+            x0 = xi;
+        }
+        return (int) x0;
+    }
+
+    /**
+     * 69. x 的平方根(二分查找)
+     */
+    public int mySqrt_(int x) {
+        int l = 0, r = x; int ans = -1;
+        while (l <= r){
+            int mid = (l+r)/2;
+            if ((long)mid * mid <= x){
+                ans = mid;
+                l = mid+1;
+            }else {
+                r = mid-1;
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 367. 有效的完全平方数
+     */
+    public boolean isPerfectSquare(int num) {
+        int l = 0, r = num;
+        while (l <= r){
+            int mid = (l+r)/2;
+            if ((long) mid*mid == num){
+                return true;
+            }else if ((long) mid * mid < num){
+                l = mid+1;
+            }else {
+                r = mid-1;
+            }
+        }
+        return false;
+    }
 
 
 }
