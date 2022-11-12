@@ -108,8 +108,18 @@ public class Main {
 //        System.out.println(Arrays.toString(main.searchRange_(nums, target)));
 //        int x = 2147395599;
 //        System.out.println(main.mySqrt_(x));
-        int num = 16;
-        System.out.println(main.isPerfectSquare(14));
+//        int num = 16;
+//        System.out.println(main.isPerfectSquare(14));
+//        int[] nums = {0,1,2,2,3,0,4,2};
+//        int val = 2;
+//        System.out.println(main.removeElement(nums,val));
+//        int[] nums = {0,0,1};
+//        System.out.println(main.removeDuplicates(nums));
+//        String s = "y#fo##f";
+//        String t = "y#f#o##f";
+//        System.out.println(main.backspaceCompare(s,t));
+        int[] nums = {-1};
+        System.out.println(Arrays.toString(main.sortedSquares_(nums)));
 
     }
 
@@ -2167,6 +2177,173 @@ public class Main {
             }
         }
         return false;
+    }
+
+    /**
+     * 27. 移除元素(双指针)
+     */
+    public int removeElement(int[] nums, int val) {
+        int left = 0;
+        int n = nums.length;
+        for (int right = 0;right < n; right++){
+            if (nums[right] != val){
+                nums[left] = nums[right];
+                left++;
+            }
+        }
+        return left;
+    }
+
+    /**
+     * 27. 移除元素（双指针优化）
+     */
+    public int removeElement_(int[] nums, int val) {
+        int left = 0;
+        int right = nums.length;
+
+        while (left < right){
+            if (nums[left] == val){
+                nums[left] = nums[right -1];
+                right--;
+            }else {
+                left++;
+            }
+        }
+        return left;
+    }
+
+    /**
+     * 27. 移除元素（相向双指针）
+     */
+    public int removeElement__(int[] nums, int val) {
+        int left = 0;
+        int right = nums.length-1;
+        //将不等于val的值移动到左边
+        while (left <= right){
+            while (left <= right && nums[left] != val){
+                left++;
+            }
+            while (left <= right && nums[right] == val){
+                right--;
+            }
+            if (left < right){
+                nums[left++] = nums[right--];
+            }
+        }
+        return left;
+    }
+
+    /**
+     * 26.删除排序数组中的重复项
+     */
+    public int removeDuplicates(int[] nums) {
+        int i = 0, j = 0;
+        int n = nums.length-1;
+        while (j <= n) {
+            if (nums[i] == nums[j]){
+                j++;
+            }else{
+                nums[i+1] = nums[j];
+                i++;
+            }
+        }
+        return i+1;
+    }
+
+
+    /**
+     * 283.移动零
+     */
+    public void moveZeroes(int[] nums) {
+        int n=nums.length-1;
+        int i=0,j=0;
+        while (j <= n){
+            if(nums[j] != 0){
+                nums[i]=nums[j];
+                i++;
+            }
+            j++;
+        }
+        while(i <= n){
+            nums[i]=0;
+            i++;
+        }
+    }
+
+    /**
+     * 844. 比较含退格的字符串
+     */
+    public boolean backspaceCompare(String s, String t) {
+        Stack<Character> sStack = new Stack<>();
+        Stack<Character> tStack = new Stack<>();
+        for (char c:s.toCharArray()){
+            if (c == '#' && !sStack.isEmpty()){
+                sStack.pop();
+            }else if (c != '#'){
+                sStack.push(c);
+            }
+        }
+        for (char c:t.toCharArray()){
+            if (c == '#' && !tStack.isEmpty()){
+                tStack.pop();
+            }else if (c != '#'){
+                tStack.push(c);
+            }
+        }
+        if (sStack.size() != tStack.size()){
+            return false;
+        }
+
+        while (!sStack.isEmpty() && !tStack.isEmpty()){
+            if (sStack.pop() != tStack.pop()) return false;
+        }
+        return true;
+    }
+
+    /**
+     * 977. 有序数组的平方
+     */
+    public int[] sortedSquares(int[] nums) {
+        int n = nums.length;
+        for (int i = 0; i < n; i++){
+            nums[i] = nums[i]*nums[i];
+        }
+        Arrays.sort(nums);
+        return nums;
+    }
+
+    /**
+     * 977. 有序数组的平方（双指针）
+     */
+    public int[] sortedSquares_(int[] nums) {
+        int n = nums.length;
+        int neg = -1;
+        for (int i = 0; i < n; i++){
+            if (nums[i] < 0){
+                neg = i;
+            }else{
+                break;
+            }
+        }
+        int[] ans = new int[n];
+        int index = 0, i = neg, j = neg+1;
+        while (i >= 0 || j < n){
+            if (i < 0){
+                ans[index] = nums[j]*nums[j];
+                j++;
+            } else if (j == n) {
+                ans[index] = nums[i]*nums[i];
+                --i;
+            } else if (nums[i]*nums[i] < nums[j]*nums[j]) {
+                ans[index] = nums[i]*nums[i];
+                --i;
+            }else {
+                ans[index] = nums[j]*nums[j];
+                j++;
+            }
+            ++index;
+        }
+        return ans;
     }
 
 
