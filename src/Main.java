@@ -118,8 +118,16 @@ public class Main {
 //        String s = "y#fo##f";
 //        String t = "y#f#o##f";
 //        System.out.println(main.backspaceCompare(s,t));
-        int[] nums = {-1};
-        System.out.println(Arrays.toString(main.sortedSquares_(nums)));
+//        int[] nums = {-1};
+//        System.out.println(Arrays.toString(main.sortedSquares_(nums)));
+//        int target = 7;
+//        int[] nums = {2,3,1,2,4,3};
+//        System.out.println(main.minSubArrayLen___(target,nums));
+//        int[] fruits = {1,2,1};
+//        System.out.println(main.totalFruit(fruits));
+        String s = "a";
+        String t = "a";
+        System.out.println(main.minWindow(s,t));
 
     }
 
@@ -2346,5 +2354,178 @@ public class Main {
         return ans;
     }
 
+    /**
+     * 209. 长度最小的子数组（暴力，超时）
+     */
+    public int minSubArrayLen(int target, int[] nums) {
+        int n = nums.length;
+        int[] prefix_nums = new int[n+1];
+        for (int i = 1; i <= n; i++){
+            prefix_nums[i] = nums[i-1]+prefix_nums[i-1];
+        }
+        int minLen = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++){
+            for (int j = n; j > i; j--){
+                if (prefix_nums[j]-prefix_nums[i]>=target){
+                    minLen = Math.min(minLen,j-i);
+                }
+            }
+        }
+        return minLen == Integer.MAX_VALUE?0:minLen;
+    }
+
+    /**
+     * 209. 长度最小的子数组（前缀和+滑动窗口）
+     */
+    public int minSubArrayLen_(int target, int[] nums) {
+        int n = nums.length;
+        int[] prefix_nums = new int[n+1];
+        for (int i = 1; i <= n; i++){
+            prefix_nums[i] = nums[i-1]+prefix_nums[i-1];
+        }
+        int minLen = Integer.MAX_VALUE;
+        int i = 0;
+        for (int j = 1; j <= n;){
+            if (prefix_nums[j]-prefix_nums[i] >= target){
+                minLen = Math.min(minLen,j-i);
+                i++;
+            }else {
+                j++;
+            }
+        }
+        return minLen == Integer.MAX_VALUE?0:minLen;
+    }
+
+    /**
+     * 209. 长度最小的子数组（前缀和+二分查找）
+     */
+    public int minSubArrayLen__(int target, int[] nums) {
+        int n = nums.length;
+        int[] prefix_nums = new int[n+1];
+        for (int i = 1; i <= n; i++){
+            prefix_nums[i] = nums[i-1]+prefix_nums[i-1];
+        }
+        int minLen = Integer.MAX_VALUE;
+        for (int j = 1; j <= n;j++){
+            int s = target+prefix_nums[j-1];
+            int bound = Arrays.binarySearch(prefix_nums,s);
+            if (bound < 0){
+                bound = -bound-1;
+            }
+            if (bound <= n){
+                minLen = Math.min(minLen, bound-(j-1));
+            }
+        }
+        return minLen == Integer.MAX_VALUE?0:minLen;
+    }
+
+
+    /**
+     * 209. 长度最小的子数组（滑动窗口）
+     */
+    public int minSubArrayLen___(int target, int[] nums) {
+        int n = nums.length;
+        int sums = 0;
+        int minLen = Integer.MAX_VALUE;
+        int i = 0;
+        for (int j = 0; j < n;j++){
+            sums+=nums[j];
+            while (sums >= target){
+                minLen = Math.min(minLen,j-i+1);
+
+                sums -= nums[i];
+                i++;
+            }
+
+        }
+        return minLen == Integer.MAX_VALUE?0:minLen;
+    }
+
+    /**
+     * 904. 水果成篮(滑动窗口)
+     */
+    public int totalFruit(int[] fruits) {
+        int n = fruits.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        int left = 0, ans = 0;
+        for (int right = 0; right < n; right++){
+            map.put(fruits[right],map.getOrDefault(fruits[right],0)+1);
+            while (map.size() > 2){
+                map.put(fruits[left],map.get(fruits[left])-1);
+                if (map.get(fruits[left]) == 0){
+                    map.remove(fruits[left]);
+                }
+                ++left;
+            }
+            ans = Math.max(ans,right-left+1);
+        }
+        return ans;
+    }
+
+    /**
+     * 76. 最小覆盖子串(滑动窗口)
+     */
+    public String minWindow(String s, String t) {
+        if(s == null || t == null){
+            return null;
+        }
+        if ("".equals(t)){
+            return "";
+        }
+        int sLen = s.length();
+        int tLen = t.length();
+        char[] charArrayS = s.toCharArray();
+        char[] charArrayT = t.toCharArray();
+
+        int[] tFreq = new int[128];
+        int[] winFreq = new int[128];
+        for (char c:charArrayT){
+            tFreq[c]++;
+        }
+        int distance = 0;
+        int minLen = sLen+1;
+        int left = 0, right = 0;
+        int begin = 0;
+        while (right < sLen){
+            if (tFreq[charArrayS[right]] == 0){
+                right++;
+                continue;
+            }
+            if (winFreq[charArrayS[right]] < tFreq[charArrayS[right]]){
+                distance++;
+            }
+            winFreq[charArrayS[right]]++;
+            right++;
+            while (distance == tLen){
+                if(right - left < minLen){
+                    minLen = right - left;
+                    begin = left;
+                }
+                if (tFreq[charArrayS[left]] == 0){
+                    left++;
+                    continue;
+                }
+                if (winFreq[charArrayS[left]] == tFreq[charArrayS[left]]){
+                    distance--;
+                }
+                winFreq[charArrayS[left]]--;
+                left++;
+            }
+        }
+        if (minLen == sLen+1){
+            return "";
+        }
+        return s.substring(begin,begin+minLen);
+    }
+
+    /**
+     * 练习：思考下列问题为什么可以使用【滑动窗口】
+     * 第3题：无重复字符的最长字串（可以用Map加快计算）
+     * 第209题：长度最小的子数组
+     * 第424题：替换后的最长重复字符
+     * 第438题：找到字符串中所有字母异位词
+     * 第567题：字符串的排列
+     * 理论化名字：决策单调性
+     */
 
 }
