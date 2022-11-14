@@ -125,9 +125,13 @@ public class Main {
 //        System.out.println(main.minSubArrayLen___(target,nums));
 //        int[] fruits = {1,2,1};
 //        System.out.println(main.totalFruit(fruits));
-        String s = "a";
-        String t = "a";
-        System.out.println(main.minWindow(s,t));
+//        String s = "a";
+//        String t = "a";
+//        System.out.println(main.minWindow(s,t));
+//        int n = 4;
+//        System.out.println(Arrays.deepToString(main.generateMatrix(n)));
+        int[][] matrix = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+        System.out.println(main.spiralOrder(matrix));
 
     }
 
@@ -2527,5 +2531,87 @@ public class Main {
      * 第567题：字符串的排列
      * 理论化名字：决策单调性
      */
+
+
+    /**
+     * 59. 螺旋矩阵 II（模拟）
+     */
+    public int[][] generateMatrix_(int n) {
+        int maxNum = n * n;
+        int curNum = 1;
+        int[][] matrix = new int[n][n];
+        int row = 0, column = 0;
+        int[][] directions = {{0,1},{1,0},{0,-1},{-1,0}};//右下左上
+        int directionIndex = 0;
+        while (curNum <= maxNum){
+            matrix[row][column] = curNum;
+            curNum++;
+            int nextRow = row+directions[directionIndex][0], nextColumn = column+directions[directionIndex][1];//判断下一个方向
+            if(nextRow < 0 || nextRow >= n || nextColumn < 0 || nextColumn >= n || matrix[nextRow][nextColumn] != 0){
+                directionIndex = (directionIndex + 1) % 4;//顺时针旋转至下一个方向
+            }
+            row = row+directions[directionIndex][0];
+            column = column+directions[directionIndex][1];
+        }
+        return matrix;
+    }
+
+
+    /**
+     * 59. 螺旋矩阵 II（按层模拟）
+     */
+    public int[][] generateMatrix(int n) {
+        int curNum = 1;
+        int[][] matrix = new int[n][n];
+        int left = 0, right = n-1, top = 0, bottom = n-1;
+        while (left <= right && top <= bottom){
+            for (int column = left; column <= right; column++){
+                matrix[top][column] = curNum++;
+            }
+            for (int row = top+1; row <= bottom; row++){
+                matrix[row][right] = curNum++;
+            }
+
+            if (left < right && top < bottom){
+                for (int column = right-1; column > left; column--){
+                    matrix[bottom][column] = curNum++;
+                }
+                for (int row = bottom; row > top; row--){
+                    matrix[row][left] = curNum++;
+                }
+            }
+            left++;
+            right--;
+            top++;
+            bottom--;
+        }
+        return matrix;
+    }
+
+    /**
+     * 54. 螺旋矩阵
+     */
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        boolean[][] flags = new boolean[m][n];
+        int[][] directions = {{0,1},{1,0},{0,-1},{-1,0}};
+        int currentIndex = 1;
+        int directionIndex = 0;
+        int row = 0, column = 0;
+        List<Integer> results = new ArrayList<>();
+        while (currentIndex <= m*n){
+            results.add(matrix[row][column]);
+            flags[row][column] = true;
+            currentIndex++;
+            int nextRow = row+directions[directionIndex][0], nextColumn = column+directions[directionIndex][1];
+            if (nextColumn < 0 || nextColumn >= n || nextRow < 0 || nextRow >= m || flags[nextRow][nextColumn]){
+                directionIndex = (directionIndex + 1) % 4;
+            }
+            row = row+directions[directionIndex][0];
+            column = column+directions[directionIndex][1];
+        }
+        return results;
+    }
 
 }
