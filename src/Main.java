@@ -130,8 +130,20 @@ public class Main {
 //        System.out.println(main.minWindow(s,t));
 //        int n = 4;
 //        System.out.println(Arrays.deepToString(main.generateMatrix(n)));
-        int[][] matrix = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
-        System.out.println(main.spiralOrder(matrix));
+//        int[][] matrix = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+//        System.out.println(main.spiralOrder(matrix));
+
+        ListNode node6 = new ListNode(7,null);
+        ListNode node5 = new ListNode(7,node6);
+        ListNode node4 = new ListNode(7,node5);
+        ListNode node3 = new ListNode(7,node4);
+        ListNode node6_ = new ListNode(7,node3);
+        ListNode node2 = new ListNode(7,node6_);
+        ListNode node1 = new ListNode(7,node2);
+        main.printListNode(node1);
+        ListNode head = main.removeElements(node1,7);
+        main.printListNode(head);
+//        System.out.println();
 
     }
 
@@ -2612,6 +2624,92 @@ public class Main {
             column = column+directions[directionIndex][1];
         }
         return results;
+    }
+
+    /**
+     * 203. 移除链表元素
+     */
+    public ListNode removeElements_(ListNode head, int val) {
+        if(head == null) return null;
+        ListNode L = new ListNode(-1,head);
+        ListNode tmp = L;
+        while (tmp.next != null){
+            if (tmp.next.val == val){
+                tmp.next = tmp.next.next;
+            }else{
+                tmp = tmp.next;
+            }
+        }
+        return L.next;
+    }
+
+
+    /**
+     * 203. 移除链表元素（递归）
+     */
+    public ListNode removeElements(ListNode head, int val) {
+        if(head == null) return null;
+        head.next = removeElements(head.next,val);
+        return head.val == val ? head.next:head;
+    }
+
+    public void printListNode(ListNode head){
+        while (head != null){
+            System.out.print(head.val+",");
+            head = head.next;
+        }
+        System.out.println();
+    }
+
+
+    class MyLinkedList {
+
+        int size;
+        ListNode head;
+        public MyLinkedList() {
+            size = 0;
+            head = new ListNode(0);
+        }
+
+        public int get(int index) {
+            if(index < 0 || index >= size) return -1;
+            ListNode cur = head;
+            for (int i = 0; i <= index; i++){
+                cur = cur.next;
+            }
+            return cur.val;
+        }
+
+        public void addAtHead(int val) {
+            addAtIndex(0,val);
+        }
+
+        public void addAtTail(int val) {
+            addAtIndex(size,val);
+        }
+
+        public void addAtIndex(int index, int val) {
+            if(index > size) return;
+            index = Math.max(0,index);
+            size++;
+            ListNode insertNode = new ListNode(val);
+            ListNode cur = head;
+            for (int i = 0; i <= index-1; i++){
+                cur = cur.next;
+            }
+            insertNode.next = cur.next;
+            cur.next = insertNode;
+        }
+
+        public void deleteAtIndex(int index) {
+            if (index < 0 || index >= size) return;
+            size--;
+            ListNode cur = head;
+            for (int i = 0; i <= index-1; i++){
+                cur = cur.next;
+            }
+            cur.next = cur.next.next;
+        }
     }
 
 }
