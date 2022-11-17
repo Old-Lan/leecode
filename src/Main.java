@@ -133,17 +133,20 @@ public class Main {
 //        int[][] matrix = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
 //        System.out.println(main.spiralOrder(matrix));
 
-        ListNode node6 = new ListNode(7,null);
-        ListNode node5 = new ListNode(7,node6);
-        ListNode node4 = new ListNode(7,node5);
-        ListNode node3 = new ListNode(7,node4);
-        ListNode node6_ = new ListNode(7,node3);
-        ListNode node2 = new ListNode(7,node6_);
-        ListNode node1 = new ListNode(7,node2);
-        main.printListNode(node1);
-        ListNode head = main.removeElements(node1,7);
-        main.printListNode(head);
+        ListNode node6 = new ListNode(6,null);
+        ListNode node5 = new ListNode(5,node6);
+        ListNode node4 = new ListNode(4,node5);
+        ListNode node3 = new ListNode(3,node4);
+//        ListNode node6_ = new ListNode(7,node3);
+        ListNode node2 = new ListNode(2,node3);
+        ListNode node1 = new ListNode(1,node2);
+//        main.printListNode(node1);
+//        ListNode head = main.removeElements(node1,7);
+//        main.printListNode(head);
 //        System.out.println();
+        main.printListNode(node1);
+        ListNode head = main.swapPairs(node1);
+        main.printListNode(head);
 
     }
 
@@ -2661,7 +2664,9 @@ public class Main {
         System.out.println();
     }
 
-
+    /**
+     * 707.设计链表
+     */
     class MyLinkedList {
 
         int size;
@@ -2710,6 +2715,56 @@ public class Main {
             }
             cur.next = cur.next.next;
         }
+    }
+
+
+    /**
+     * 206. 反转链表(迭代)
+     */
+    public ListNode reverseList(ListNode head) {
+        if(head == null) return null;
+        ListNode pre = null;
+        ListNode cur = head;
+        while (cur != null){
+            ListNode tmp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = tmp;
+
+        }
+        return pre;
+    }
+
+
+    /**
+     * 206. 反转链表(递归)
+     */
+    public ListNode reverseList_(ListNode head) {
+        if(head == null || head.next == null){
+            return head;
+        }
+        ListNode newHead = reverseList_(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
+    }
+
+    /**
+     * 24. 两两交换链表中的节点
+     */
+    public ListNode swapPairs(ListNode head) {
+        if (head == null){
+            return null;
+        }
+        ListNode pre = head;
+        while (pre != null && pre.next != null){
+            ListNode next = pre.next;
+            int tmp = pre.val;
+            pre.val = next.val;
+            next.val = tmp;
+            pre = pre.next.next;
+        }
+        return head;
     }
 
 }
