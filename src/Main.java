@@ -133,20 +133,22 @@ public class Main {
 //        int[][] matrix = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
 //        System.out.println(main.spiralOrder(matrix));
 
+//        ListNode node6_ = new ListNode(7,node3);
         ListNode node6 = new ListNode(6,null);
         ListNode node5 = new ListNode(5,node6);
         ListNode node4 = new ListNode(4,node5);
         ListNode node3 = new ListNode(3,node4);
-//        ListNode node6_ = new ListNode(7,node3);
         ListNode node2 = new ListNode(2,node3);
         ListNode node1 = new ListNode(1,node2);
+        node6.next = node2;
 //        main.printListNode(node1);
 //        ListNode head = main.removeElements(node1,7);
 //        main.printListNode(head);
 //        System.out.println();
-        main.printListNode(node1);
-        ListNode head = main.swapPairs(node1);
-        main.printListNode(head);
+//        main.printListNode(node1);
+//        ListNode head = main.removeNthFromEnd(node1,2);
+//        main.printListNode(head);
+        System.out.println(main.detectCycle(node1));
 
     }
 
@@ -2752,7 +2754,7 @@ public class Main {
     /**
      * 24. 两两交换链表中的节点
      */
-    public ListNode swapPairs(ListNode head) {
+    public ListNode swapPairs_(ListNode head) {
         if (head == null){
             return null;
         }
@@ -2765,6 +2767,83 @@ public class Main {
             pre = pre.next.next;
         }
         return head;
+    }
+
+    /**
+     * 24. 两两交换链表中的节点
+     */
+    public ListNode swapPairs(ListNode head) {
+        if (head == null){
+            return null;
+        }
+        ListNode L = new ListNode(-1);
+        L.next = head;
+        ListNode pre = L;
+        while (pre.next != null && pre.next.next!= null){
+            ListNode next = pre.next.next;
+            ListNode tmp = pre.next;
+            tmp.next = next.next;
+            pre.next = next;
+            next.next = tmp;
+            pre = pre.next.next;
+        }
+        return L.next;
+    }
+
+    /**
+     * 19. 删除链表的倒数第 N 个结点
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) return null;
+        if (n < 0) return head;
+        ListNode L = new ListNode(-1);
+        L.next = head;
+        ListNode cur = L;
+        int size = 0;
+        while (head != null){
+            size++;
+            head = head.next;
+        }
+        for (int i = 0; i < size-n-1; i++){
+            cur = cur.next;
+        }
+        cur.next = cur.next.next;
+        return L.next;
+    }
+
+    /**
+     * 面试题 02.07. 链表相交
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        Set<ListNode> visited = new HashSet<>();
+        ListNode temp = headA;
+        while (temp != null){
+            visited.add(temp);
+            temp = temp.next;
+        }
+        temp = headB;
+        while (temp != null){
+            if (visited.contains(temp)){
+                return temp;
+            }
+            temp = temp.next;
+        }
+        return null;
+    }
+
+    /**
+     * 142. 环形链表 II
+     */
+    public ListNode detectCycle(ListNode head) {
+        Set<ListNode> visited = new HashSet<>();
+        while (head != null){
+            if (visited.contains(head)){
+                return head;
+            }
+            visited.add(head);
+            head = head.next;
+        }
+        return null;
     }
 
 }
