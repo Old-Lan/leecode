@@ -134,13 +134,13 @@ public class Main {
 //        System.out.println(main.spiralOrder(matrix));
 
 //        ListNode node6_ = new ListNode(7,node3);
-        ListNode node6 = new ListNode(6,null);
-        ListNode node5 = new ListNode(5,node6);
-        ListNode node4 = new ListNode(4,node5);
-        ListNode node3 = new ListNode(3,node4);
-        ListNode node2 = new ListNode(2,node3);
-        ListNode node1 = new ListNode(1,node2);
-        node6.next = node2;
+//        ListNode node6 = new ListNode(6,null);
+//        ListNode node5 = new ListNode(5,node6);
+//        ListNode node4 = new ListNode(4,node5);
+//        ListNode node3 = new ListNode(3,node4);
+//        ListNode node2 = new ListNode(2,node3);
+//        ListNode node1 = new ListNode(1,node2);
+//        node6.next = node2;
 //        main.printListNode(node1);
 //        ListNode head = main.removeElements(node1,7);
 //        main.printListNode(head);
@@ -148,7 +148,22 @@ public class Main {
 //        main.printListNode(node1);
 //        ListNode head = main.removeNthFromEnd(node1,2);
 //        main.printListNode(head);
-        System.out.println(main.detectCycle(node1));
+//        System.out.println(main.detectCycle(node1));
+//        String s = "a";
+//        String t = "ab";
+//        System.out.println(main.isAnagram(s,t));
+//        int[] nums1 = {4,9,5};
+//        int[] nums2 = {9,4,9,8,4};
+//        System.out.println(Arrays.toString(main.intersection(nums1, nums2)));
+//        String ransomNote = "aab";
+//        String magazine = "baa";
+//        System.out.println(main.canConstruct(ransomNote,magazine));
+//        String[] strs = {"eat","tea","tan","ate","nat","bat"};
+//        System.out.println(main.groupAnagrams(strs));
+//        String s = "cbaebabacd";
+        String s = "abab";
+        String p = "ab";
+        System.out.println(main.findAnagrams(s,p));
 
     }
 
@@ -2846,4 +2861,138 @@ public class Main {
         return null;
     }
 
+    /**
+     * 242. 有效的字母异位词
+     */
+    public boolean isAnagram(String s, String t) {
+        Map<Character,Integer> mapS = new HashMap<>();
+        for (char c:s.toCharArray()){
+            mapS.put(c,mapS.getOrDefault(c,0)+1);
+        }
+        Map<Character,Integer> mapT = new HashMap<>();
+        for (char c:t.toCharArray()){
+            mapT.put(c,mapT.getOrDefault(c,0)+1);
+        }
+        if (mapS.size() != mapT.size()) return false;
+        for (Character key:mapS.keySet()){
+            if (!Objects.equals(mapS.get(key), mapT.getOrDefault(key, 0))){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 349. 两个数组的交集
+     */
+    public int[] intersection_(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        for (int k : nums1) {
+            set1.add(k);
+        }
+        for (int j : nums2) {
+           set2.add(j);
+        }
+        List<Integer> list = new ArrayList<>();
+        for (int key : set1){
+            if (!set2.contains(key)) continue;
+            list.add(key);
+        }
+        int len = list.size();
+        int[] array = new int[len];
+        for (int i=0; i < len; i++){
+            array[i] = list.get(i);
+        }
+        return array;
+    }
+
+    /**
+     * 349. 两个数组的交集（排序+双指针）
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        int[] results = new int[len1+len2];
+        int index1 = 0, index2 = 0, index3 = 0;
+        while (index1 < len1 && index2 < len2){
+            int num1 = nums1[index1];
+            int num2 = nums2[index2];
+            if (num1 == num2){
+                if (index3 == 0 || results[index3-1] != num1){
+                    results[index3++] = num1;
+                }
+                index1++;
+                index2++;
+            } else if (num1 < num2) {
+                index1++;
+            }else {
+                index2++;
+            }
+        }
+        return Arrays.copyOf(results, index3);
+    }
+
+    /**
+     * 383. 赎金信
+     */
+    public boolean canConstruct(String ransomNote, String magazine) {
+        Map<Character,Integer> map = new HashMap<>();
+        for (char c: magazine.toCharArray()){
+            map.put(c,map.getOrDefault(c,0)+1);
+        }
+        for (char c:ransomNote.toCharArray()){
+            map.put(c,map.getOrDefault(c,0)-1);
+            if (map.get(c) < 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * 49. 字母异位词分组（排序）
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (String str:strs){
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            List<String> list = map.getOrDefault(key, new ArrayList<>());
+            list.add(str);
+            map.put(key, list);
+        }
+        return new ArrayList<>(new ArrayList<>(map.values()));
+    }
+
+    /**
+     * 438. 找到字符串中所有字母异位词
+     */
+    public List<Integer> findAnagrams(String s, String p) {
+        int lenS = s.length();
+        int lenP = p.length();
+        List<Integer> results = new ArrayList<>();
+        if (lenS < lenP) return results;
+        int[] sCount = new int[26];
+        int[] pCount = new int[26];
+        for (int i = 0; i < lenP; i++){
+            ++sCount[s.charAt(i)-'a'];
+            ++pCount[p.charAt(i)-'a'];
+        }
+        if (Arrays.equals(sCount,pCount)){
+            results.add(0);
+        }
+        for (int i = 0; i < lenS-lenP; i++){
+            --sCount[s.charAt(i)-'a'];
+            ++sCount[s.charAt(i+lenP)-'a'];
+            if (Arrays.equals(sCount,pCount)){
+                results.add(i+1);
+            }
+        }
+        return results;
+    }
 }
