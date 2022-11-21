@@ -161,9 +161,17 @@ public class Main {
 //        String[] strs = {"eat","tea","tan","ate","nat","bat"};
 //        System.out.println(main.groupAnagrams(strs));
 //        String s = "cbaebabacd";
-        String s = "abab";
-        String p = "ab";
-        System.out.println(main.findAnagrams(s,p));
+//        String s = "abab";
+//        String p = "ab";
+//        System.out.println(main.findAnagrams(s,p));
+//        int[] nums1 = {4,9,5};
+//        int[] nums2 = {9,4,9,8,4};
+//        System.out.println(Arrays.toString(main.intersect(nums1, nums2)));
+//        System.out.println(81*3);
+        int[] nums = {1,2,3,4,4,9,56,90};
+        int target = 8;
+        System.out.println(Arrays.toString(main.twoSum(nums, target)));
+
 
     }
 
@@ -171,7 +179,7 @@ public class Main {
     }
 
 
-    public int[] twoSum(int[] nums, int target) {
+    public int[] twoSum__(int[] nums, int target) {
         int[] result = new int[2];
         int len = nums.length;
         for (int i = 0; i < len; i++){
@@ -2994,5 +3002,119 @@ public class Main {
             }
         }
         return results;
+    }
+
+    /**
+     * 350. 两个数组的交集 II（排序+双指针）
+     */
+    public int[] intersect_(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int index1 = 0, index2 = 0, index = 0;
+        int len1 = nums1.length, len2 = nums2.length;
+        int[] results = new int[len1+len2];
+        while (index1 < len1 && index2 < len2){
+            int num1 = nums1[index1];
+            int num2 = nums2[index2];
+            if (num1 == num2){
+                results[index++] = num1;
+                index1++;
+                index2++;
+            } else if (num1 < num2) {
+                index1++;
+            }else {
+                index2++;
+            }
+        }
+        return Arrays.copyOf(results,index);
+    }
+
+    /**
+     * 350. 两个数组的交集 II（哈希）
+     */
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num: nums1){
+            map.put(num,map.getOrDefault(num,0)+1);
+        }
+        List<Integer> list = new ArrayList<>();
+        for (int num:nums2){
+            int count = map.getOrDefault(num,0);
+            if (count > 0){
+                list.add(num);
+                map.put(num,map.get(num)-1);
+            }
+        }
+        int len = list.size();
+        int[] results = new int[len];
+        for (int i = 0; i < len;i++){
+            results[i] = list.get(i);
+        }
+        return results;
+    }
+
+    /**
+     * 202. 快乐数
+     */
+    public boolean isHappy(int n) {
+        if (n == 1) return true;
+        Set<Integer> seen = new HashSet<>();
+        while (true){
+            int sum = 0;
+            while (n > 0){
+                int single = n % 10;
+                n = n/10;
+                sum += single*single;
+            }
+            n = sum;
+            if (sum == 1) return true;
+            if (seen.contains(sum)) return false;
+            seen.add(sum);
+        }
+    }
+
+    /**
+     * 1. 两数之和（哈希）
+     */
+    public int[] twoSum_(int[] nums, int target) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++){
+            if (map.containsKey(target-nums[i])){
+                return new int[]{map.get(target-nums[i]),i};
+            }
+            map.put(nums[i],i);
+        }
+        return null;
+    }
+
+    /**
+     * 167. 两数之和 II - 输入有序数组
+     */
+    public int[] twoSum(int[] numbers, int target) {
+        int len = numbers.length;
+        for (int i = 0; i < len; i++){
+            int remainder = target - numbers[i];
+            int j = binarySearch_(numbers,remainder,i);
+            if (j != -1){
+                return new int[]{i+1, j+1};
+            }
+        }
+        return null;
+    }
+
+    private int binarySearch_(int[] nums, int target,int i){
+        int left = 0;
+        int right = nums.length-1;
+        while (left <= right){
+            int middle = (left+right)/2;
+            if (nums[middle] == target && middle != i){
+                return middle;
+            } else if (nums[middle] > target) {
+                right = middle-1;
+            }else {
+                left = middle+1;
+            }
+        }
+        return -1;
     }
 }
