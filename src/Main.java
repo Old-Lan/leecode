@@ -168,9 +168,16 @@ public class Main {
 //        int[] nums2 = {9,4,9,8,4};
 //        System.out.println(Arrays.toString(main.intersect(nums1, nums2)));
 //        System.out.println(81*3);
-        int[] nums = {1,2,3,4,4,9,56,90};
-        int target = 8;
-        System.out.println(Arrays.toString(main.twoSum(nums, target)));
+//        int[] nums = {1,2,3,4,4,9,56,90};
+//        int target = 8;
+//        System.out.println(Arrays.toString(main.twoSum(nums, target)));
+//        int[] nums1 = {1,2};
+//        int[] nums2 = {-2,-1};
+//        int[] nums3 = {-1,2};
+//        int[] nums4 = {0,2};
+//        System.out.println(main.fourSumCount(nums1,nums2,nums3,nums4));
+        int[] nums = {-2,0,0,2,2};
+        System.out.println(main.threeSum(nums));
 
 
     }
@@ -3117,4 +3124,59 @@ public class Main {
         }
         return -1;
     }
+
+    /**
+     * 454. 四数相加 II
+     */
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int num1:nums1){
+            for (int num2:nums2){
+                map.put(num1+num2,map.getOrDefault(num1+num2,0)+1);
+            }
+        }
+        int ans = 0;
+        for (int num3:nums3){
+            for (int num4:nums4){
+                ans+=map.getOrDefault(-num3-num4,0);
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 15. 三数之和
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (nums == null || nums.length < 3) return results;
+        Arrays.sort(nums);
+        int len = nums.length;
+        for (int first = 0; first < len; ++first){
+            if (first > 0 && nums[first] == nums[first-1]){
+                continue;
+            }
+            int third = len-1;
+            int target = -nums[first];
+            for (int second = first+1; second < len; ++second){
+                if (second > first+1 && nums[second] == nums[second-1]) continue;
+                while (second < third && nums[second] + nums[third] > target){
+                    --third;
+                }
+                if (second == third){
+                    break;
+                }
+                if (nums[second]+nums[third] == target){
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[first]);
+                    list.add(nums[second]);
+                    list.add(nums[third]);
+                    results.add(list);
+                }
+            }
+        }
+        return results;
+    }
+
+
 }
