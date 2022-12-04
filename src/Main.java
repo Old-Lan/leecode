@@ -176,8 +176,12 @@ public class Main {
 //        int[] nums3 = {-1,2};
 //        int[] nums4 = {0,2};
 //        System.out.println(main.fourSumCount(nums1,nums2,nums3,nums4));
-        int[] nums = {-2,0,0,2,2};
-        System.out.println(main.threeSum(nums));
+//        int[] nums = {1000000000,1000000000,1000000000,1000000000};
+//        System.out.println(main.fourSum(nums,-294967296));
+//        System.out.println(Integer.MIN_VALUE);
+        String s = "abcd";
+        int k = 2;
+        System.out.println(main.reverseStr(s,k));
 
 
     }
@@ -3178,5 +3182,102 @@ public class Main {
         return results;
     }
 
+    /**
+     * 18. 四数之和
+     */
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (nums == null || nums.length < 4) return results;
+        Arrays.sort(nums);
+        int len = nums.length;
+        for (int first = 0; first < len; ++first){
+            if (first > 0 && nums[first] == nums[first-1]){
+                continue;
+            }
+            for (int second = first+1; second < len; ++second){
+                if (second > first+1 && nums[second] == nums[second-1]){
+                    continue;
+                }
+                int fourth = len-1;
+                for (int third = second+1; third < len; ++third){
+                    if (third > second+1 && nums[third] == nums[third-1]){
+                        continue;
+                    }
+                    while (third < fourth && (long)nums[first]+nums[second]+nums[third]+nums[fourth] > target){
+                        --fourth;
+                    }
+                    if (third == fourth){
+                        break;
+                    }
+                    if ((long)nums[first]+nums[second]+nums[third]+nums[fourth] == target){
+                        List<Integer> list = new ArrayList<>();
+                        list.add(nums[first]);
+                        list.add(nums[second]);
+                        list.add(nums[third]);
+                        list.add(nums[fourth]);
+                        results.add(list);
+                    }
+                }
+            }
+        }
+        return results;
+    }
+
+    /**
+     * 344. 反转字符串
+     */
+    public void reverseString(char[] s) {
+        int len = s.length;
+        for (int i = 0; i < len/2; i++){
+            char tmp = s[i];
+            s[i] = s[len-i-1];
+            s[len-i-1] = tmp;
+        }
+    }
+
+    /**
+     * 541. 反转字符串 II
+     */
+    public String reverseStr(String s, int k) {
+        int n = s.length();
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < n; i+=2*k){
+            reverse(chars,i,Math.min(i+k,n)-1);
+        }
+        return new String(chars);
+    }
+
+    public void reverse(char[] chars,int left, int right){
+        while (left < right){
+            char tmp = chars[left];
+            chars[left] = chars[right];
+            chars[right] = tmp;
+            left++;
+            right--;
+        }
+    }
+
+
+    /**
+     * 剑指 Offer 05. 替换空格
+     */
+    public String replaceSpace_(String s) {
+        return s.replace(" ", "%20");
+    }
+
+    /**
+     * 剑指 Offer 05. 替换空格
+     */
+    public String replaceSpace(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (char c:s.toCharArray()){
+            if (c == ' '){
+                sb.append("%20");
+            }else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
 
 }
