@@ -2,6 +2,7 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -115,8 +116,8 @@ public class Main {
 //        System.out.println(main.removeElement(nums,val));
 //        int[] nums = {0,0,1};
 //        System.out.println(main.removeDuplicates(nums));
-//        String s = "y#fo##f";
-//        String t = "y#f#o##f";
+//        String s = "bbbextm";
+//        String t = "bbb#extm";
 //        System.out.println(main.backspaceCompare(s,t));
 //        int[] nums = {-1};
 //        System.out.println(Arrays.toString(main.sortedSquares_(nums)));
@@ -134,21 +135,21 @@ public class Main {
 //        System.out.println(main.spiralOrder(matrix));
 
 //        ListNode node6_ = new ListNode(7,node3);
-//        ListNode node6 = new ListNode(6,null);
-//        ListNode node5 = new ListNode(5,node6);
-//        ListNode node4 = new ListNode(4,node5);
-//        ListNode node3 = new ListNode(3,node4);
-//        ListNode node2 = new ListNode(2,node3);
-//        ListNode node1 = new ListNode(1,node2);
+        ListNode node6 = new ListNode(6,null);
+        ListNode node5 = new ListNode(5,node6);
+        ListNode node4 = new ListNode(4,node5);
+        ListNode node3 = new ListNode(3,node4);
+        ListNode node2 = new ListNode(2,node3);
+        ListNode node1 = new ListNode(1,node2);
 //        node6.next = node2;
-//        main.printListNode(node1);
-//        ListNode head = main.removeElements(node1,7);
-//        main.printListNode(head);
+        main.printListNode(node1);
+        ListNode head = main.removeElements(node1,1);
+        main.printListNode(head);
 //        System.out.println();
 //        main.printListNode(node1);
-//        ListNode head = main.removeNthFromEnd(node1,2);
+//        ListNode head = main.removeNthFromEnd(node1,1);
 //        main.printListNode(head);
-//        System.out.println(main.detectCycle(node1));
+//        System.out.println(main.detectCycle(node1).val);
 //        String s = "a";
 //        String t = "ab";
 //        System.out.println(main.isAnagram(s,t));
@@ -179,11 +180,94 @@ public class Main {
 //        int[] nums = {1000000000,1000000000,1000000000,1000000000};
 //        System.out.println(main.fourSum(nums,-294967296));
 //        System.out.println(Integer.MIN_VALUE);
-        String s = "abcd";
-        int k = 2;
-        System.out.println(main.reverseStr(s,k));
+//        String s = "abcd";
+//        int k = 2;
+//        System.out.println(main.reverseStr(s,k));
+//        String words = "  Bob    Loves  Alice   ";
+//        System.out.println(main.reverseWords(words));
+//        String s = "abcdefg";
+//        int n = 2;
+//        System.out.println(main.reverseLeftWords(s,n));
+//        String haystack = "abc";
+//        String needle = "c";
+//        System.out.println(main.strStr(haystack,needle));
+//        String s = "aabaaba";
+//        System.out.println(main.repeatedSubstringPattern(s));
+//        System.out.printf("%5d %d",1,2,3);
+//        System.out.printf("%5d %f", 1);
+//        System.out.printf("%5d %f",1,2);
+//        System.out.printf("%.2f\n%0.2f", 1.23456, 0.0);
+//        System.out.printf("%08s\n","Java");
+//        System.out.printf("%05d %06.1f\n",32,32.32);
+//        Scanner scanner = new Scanner(System.in);
+//        String ssn = scanner.nextLine();
+//        String pattern = "\\d\\d\\d-\\d\\d-\\d\\d\\d\\d";
+//        boolean isMatch = Pattern.matches(pattern,ssn);
+//        System.out.println(isMatch)
+//        System.out.println(main.climbStairs(3));
+//        int[] cost = {10,15,20};
+//        main.minCostClimbingStairs(cost);
+//        int[] nums = {847,847,0,0,0,399,416,416,879,879,206,206,206,272};
+//        int[] results = main.applyOperations(nums);
+//        main.printArray(results);
 
+//        int[] nums = {2,1,3,0,6};
+//        int[] results = main.selectSort(nums);
+//        main.printArray(results);
+//        int m = 3;
+//        int n = 7;
+//        System.out.println(main.uniquePaths(3,3));
+//        int[][] obstacleGrid = {{0,0},{1,1},{0,0}};
+//        System.out.println(main.uniquePathsWithObstacles(obstacleGrid));
+//        int n = 3;
+//        System.out.println(main.numTrees(n));
+//        String[] strs = {"flower","flow","flight"};
+//        String[] strs = {"dog","racecar","car"};
+//        String[] strs = {"a"};
+//        System.out.println(main.longestCommonPrefix(strs));
+//        int[] arr = {5,7,4,5,8,1,6,0,3,4,6,1,7};
+//        System.out.println(win1(arr));
+//        System.out.println(win2(arr));
+//        System.out.println(win3(arr));
+//        int[] weights = {3,2,4,7,3,1,7};
+//        int[] values = {5,6,3,19,12,4,2};
+//        int bag = 15;
+//        System.out.println(maxValue(weights,values,bag));
+//        System.out.println(dp(weights,values,bag));
 
+//        char a = '0'+1;
+//        System.out.println(a);
+//        Myqueue myqueue = new Myqueue();
+//        myqueue.push(1);
+//        myqueue.push(2);
+//        myqueue.pop();
+//        myqueue.push(3);
+//        System.out.println(myqueue.pop());
+//        int[][] obstacleGrid = {{0,0,0},{0,1,0},{0,0,0}};
+//
+//        int result = main.uniquePathsWithObstacles(obstacleGrid);
+//        System.out.println(result);
+//        ListNode a1 = new ListNode(3);
+//        ListNode a2 = new ListNode(2);
+//        ListNode c1 = new ListNode(0);
+//        ListNode c2 = new ListNode(-4);
+//        ListNode c3 = new ListNode(5);
+//        ListNode b1 = new ListNode(5);
+//        ListNode b2 = new ListNode(0);
+//        ListNode b3 = new ListNode(1);
+//        a1.next = a2;
+//        a2.next = c1;
+//        c1.next = c2;
+//        c2.next = c3;
+//        c3.next = c2;
+//        b1.next = b2;
+//        b2.next = b3;
+//        b3.next = c1;
+//        ListNode cycleListNode = main.detectCycle(a1);
+//        System.out.println(cycleListNode.val);
+//        int[] nums = {0,0,0};
+//        List<List<Integer>> results = main.threeSum_brute_repeat(nums);
+//        System.out.println(results);
     }
 
     public Main(){
@@ -2336,7 +2420,7 @@ public class Main {
     /**
      * 844. 比较含退格的字符串
      */
-    public boolean backspaceCompare(String s, String t) {
+    public boolean backspaceCompare_(String s, String t) {
         Stack<Character> sStack = new Stack<>();
         Stack<Character> tStack = new Stack<>();
         for (char c:s.toCharArray()){
@@ -2364,9 +2448,53 @@ public class Main {
     }
 
     /**
+     * 844. 比较含退格的字符串
+     */
+    public boolean backspaceCompare(String s, String t) {
+        int i = s.length()-1, j = t.length()-1;
+        int skipS = 0, skipT = 0;
+        while (i >= 0 || j >= 0){
+            while (i >= 0){
+                if (s.charAt(i) == '#'){
+                    skipS++;
+                    i--;
+                } else if (skipS > 0) {
+                    skipS--;
+                    i--;
+                }else {
+                    break;
+                }
+            }
+            while (j >= 0){
+                if (t.charAt(j) == '#'){
+                    skipT++;
+                    j--;
+                } else if (skipT > 0) {
+                    skipT--;
+                    j--;
+                }else {
+                    break;
+                }
+            }
+            if (i >= 0 && j >= 0){
+                if (s.charAt(i) != t.charAt(j)){
+                    return false;
+                }
+            }else {
+                if (i >= 0 || j >= 0){
+                    return false;
+                }
+            }
+            i--;
+            j--;
+        }
+        return true;
+    }
+
+    /**
      * 977. 有序数组的平方
      */
-    public int[] sortedSquares(int[] nums) {
+    public int[] sortedSquares__(int[] nums) {
         int n = nums.length;
         for (int i = 0; i < n; i++){
             nums[i] = nums[i]*nums[i];
@@ -2407,6 +2535,20 @@ public class Main {
             ++index;
         }
         return ans;
+    }
+
+    /**
+     * 977. 有序数组的平方
+     */
+    public int[] sortedSquares(int[] nums) {
+//        int n = nums.length;
+//        for (int i = 1; i < n; i++){
+//            int tmp = nums[i]*nums[i];
+//            for (int j = i-1; j >= 0; --j){
+//                if (nums[j]>tmp) nums[j+1]
+//            }
+//        }
+        return nums;
     }
 
     /**
@@ -2668,7 +2810,7 @@ public class Main {
     /**
      * 203. 移除链表元素
      */
-    public ListNode removeElements_(ListNode head, int val) {
+    public ListNode removeElements___(ListNode head, int val) {
         if(head == null) return null;
         ListNode L = new ListNode(-1,head);
         ListNode tmp = L;
@@ -2684,10 +2826,45 @@ public class Main {
 
 
     /**
+     * 203. 移除链表元素(复习)
+     * @param head
+     * @param val
+     * @return
+     */
+    public ListNode removeElements__(ListNode head, int val){
+        //考虑删除第一个节点和其他节点的处理方式相同，所以需要一个头结点
+        ListNode L = new ListNode(-1,head);
+        ListNode tmp = L;
+        while (tmp.next != null){
+            if (tmp.next.val == val){
+                tmp.next = tmp.next.next;
+            }else {
+                tmp = tmp.next;
+            }
+        }
+        return L.next;
+    }
+
+
+    /**
      * 203. 移除链表元素（递归）
      */
-    public ListNode removeElements(ListNode head, int val) {
+    public ListNode removeElements_(ListNode head, int val) {
         if(head == null) return null;
+        head.next = removeElements_(head.next,val);
+        return head.val == val ? head.next:head;
+    }
+
+    /**
+     * 203. 移除链表元素（递归-复习）
+     * @param head
+     * @param val
+     * @return
+     */
+    public ListNode removeElements(ListNode head, int val){
+        if (head == null){
+            return null;
+        }
         head.next = removeElements(head.next,val);
         return head.val == val ? head.next:head;
     }
@@ -2775,6 +2952,7 @@ public class Main {
     /**
      * 206. 反转链表(递归)
      */
+    //1->2->3->4->5->null
     public ListNode reverseList_(ListNode head) {
         if(head == null || head.next == null){
             return head;
@@ -2827,7 +3005,7 @@ public class Main {
     /**
      * 19. 删除链表的倒数第 N 个结点
      */
-    public ListNode removeNthFromEnd(ListNode head, int n) {
+    public ListNode removeNthFromEnd_(ListNode head, int n) {
         if (head == null) return null;
         if (n < 0) return head;
         ListNode L = new ListNode(-1);
@@ -2846,9 +3024,27 @@ public class Main {
     }
 
     /**
+     * 19. 删除链表的倒数第 N 个结点
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode first = head;
+        ListNode second = dummy;
+        for (int i = 0; i < n; ++i){
+            first = first.next;
+        }
+        while (first != null){
+            first = first.next;
+            second = second.next;
+        }
+        second.next = second.next.next;
+        return dummy.next;
+    }
+
+    /**
      * 面试题 02.07. 链表相交
      */
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    public ListNode getIntersectionNode_(ListNode headA, ListNode headB) {
         Set<ListNode> visited = new HashSet<>();
         ListNode temp = headA;
         while (temp != null){
@@ -2868,7 +3064,7 @@ public class Main {
     /**
      * 142. 环形链表 II
      */
-    public ListNode detectCycle(ListNode head) {
+    public ListNode detectCycle_(ListNode head) {
         Set<ListNode> visited = new HashSet<>();
         while (head != null){
             if (visited.contains(head)){
@@ -2876,6 +3072,27 @@ public class Main {
             }
             visited.add(head);
             head = head.next;
+        }
+        return null;
+    }
+
+    /**
+     * 142. 环形链表 II
+     */
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if (slow == fast){//第一次相遇
+                ListNode pre = head;
+                while (pre != slow){//往前走到入口处
+                    pre = pre.next;
+                    slow = slow.next;
+                }
+                return pre;
+            }
         }
         return null;
     }
@@ -3151,7 +3368,7 @@ public class Main {
     /**
      * 15. 三数之和
      */
-    public List<List<Integer>> threeSum(int[] nums) {
+    public List<List<Integer>> threeSum_(int[] nums) {
         List<List<Integer>> results = new ArrayList<>();
         if (nums == null || nums.length < 3) return results;
         Arrays.sort(nums);
@@ -3171,6 +3388,142 @@ public class Main {
                     break;
                 }
                 if (nums[second]+nums[third] == target){
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[first]);
+                    list.add(nums[second]);
+                    list.add(nums[third]);
+                    results.add(list);
+                }
+            }
+        }
+        return results;
+    }
+
+    /**
+     * 三数之和（暴力）
+     */
+    public List<List<Integer>> threeSum_brute(int[] nums){
+        List<List<Integer>> results = new ArrayList<>();
+        if (nums.length < 3){
+            return results;
+        }
+        int len = nums.length;
+        for (int first = 0; first < len; ++first){
+            for (int second = first + 1; second < len; ++second){
+                for (int third = second + 1; third < len; ++third){
+                    if (nums[first] + nums[second] + nums[third] == 0){
+                        List<Integer> list = new ArrayList<>();
+                        list.add(nums[first]);
+                        list.add(nums[second]);
+                        list.add(nums[third]);
+                        results.add(list);
+                    }
+                }
+            }
+        }
+        //去重
+        int n = results.size();
+        List<List<Integer>> results_copy = new ArrayList<>();
+        for (int i = 0; i < n; ++i){
+            List<Integer> list = results.get(i);
+            boolean flag = false;
+            for (int j = 0; j < results_copy.size(); ++j){
+                if (list.containsAll(results_copy.get(j)) && results_copy.get(j).containsAll(list)){
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag){
+                results_copy.add(list);
+            }
+        }
+        return results_copy;
+    }
+
+    /**
+     * 三数之和（暴力-重复优化）
+     */
+    public List<List<Integer>> threeSum_brute_repeat(int[] nums){
+        List<List<Integer>> results = new ArrayList<>();
+        int len = nums.length;
+        if (len < 3){
+            return results;
+        }
+        for (int first = 0; first < len; ++first){
+            if (first > 0 && nums[first] == nums[first-1]){
+                continue;
+            }
+            for (int second = first+1; second < len; ++second){
+                if (second > first+1 && nums[second] == nums[second -1]){
+                    continue;
+                }
+                for (int third = second + 1; third < len; ++ third){
+                    if (third > second + 1 && nums[third] == nums[third-1]){
+                        continue;
+                    }
+                    if (nums[first] + nums[second] + nums[third] == 0){
+                        List<Integer> list = new ArrayList<>();
+                        list.add(nums[first]);
+                        list.add(nums[second]);
+                        list.add(nums[third]);
+                        results.add(list);
+                    }
+                }
+            }
+        }
+        //去重
+        int n = results.size();
+        List<List<Integer>> results_copy = new ArrayList<>();
+        for (int i = 0; i < n; ++i){
+            List<Integer> list = results.get(i);
+            boolean flag = false;
+            for (int j = 0; j < results_copy.size(); ++j){
+                if (list.containsAll(results_copy.get(j)) && results_copy.get(j).containsAll(list)){
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag){
+                results_copy.add(list);
+            }
+        }
+        return results_copy;
+    }
+
+    /**
+     * 15. 三数之和
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        if (nums.length < 3){
+            return results;
+        }
+        int len = nums.length;
+        Arrays.sort(nums);
+        // 枚举a
+        for (int first = 0; first < len; first++){
+            //需要和上一次枚举的数不相同
+            if (first > 0 && nums[first] == nums[first-1]){
+                continue;
+            }
+            //c 对应的指针初始指向数组的最右端
+            int third = len-1;
+            int target = -nums[first];
+            // 枚举b
+            for (int second = first + 1; second < len; ++second){
+                //需要和上一次枚举的数不相同
+                if (second > first + 1 && nums[second] == nums[second - 1]){
+                    continue;
+                }
+                // 需要保证b的指针在c的指针的左侧
+                while (second < third && nums[second] + nums[third] > target){
+                    --third;
+                }
+                // 如果指针重合，随着b后续的增加，就不会有满足a+b+c=0 并且 b<c 的 c了，可以退出循环
+                if (second == third){
+                    break;
+                }
+                if (nums[second] + nums[third] == target){
                     List<Integer> list = new ArrayList<>();
                     list.add(nums[first]);
                     list.add(nums[second]);
@@ -3261,14 +3614,14 @@ public class Main {
     /**
      * 剑指 Offer 05. 替换空格
      */
-    public String replaceSpace_(String s) {
+    public String replaceSpace__(String s) {
         return s.replace(" ", "%20");
     }
 
     /**
      * 剑指 Offer 05. 替换空格
      */
-    public String replaceSpace(String s) {
+    public String replaceSpace_(String s) {
         StringBuilder sb = new StringBuilder();
         for (char c:s.toCharArray()){
             if (c == ' '){
@@ -3279,5 +3632,833 @@ public class Main {
         }
         return sb.toString();
     }
+
+    /**
+     * 151. 反转字符串中的单词
+     */
+    public String reverseWords_(String s) {
+        if (s == null || s.equals("")) return s;
+        s = s.trim();
+        Stack<String> stack = new Stack<>();
+        String[] strings = s.split(" ");
+        for (String str: strings){
+            if (!str.equals("")) {
+                stack.push(str);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()){
+            sb.append(stack.pop());
+            sb.append(" ");
+        }
+        return sb.toString().trim();
+    }
+
+    /**
+     * 151. 反转字符串中的单词
+     */
+    public String reverseWords(String s) {
+        StringBuilder sb = removeSpace(s);
+        StringBuilder stringReverse = reverseString(sb, 0, sb.length()-1);
+        StringBuilder wordReverse = reverseEachWord(stringReverse);
+        return wordReverse.toString();
+    }
+
+    private StringBuilder removeSpace(String s){
+        int left = 0;
+        int right = s.length()-1;
+        //去除开头空格
+        while (s.charAt(left) == ' '){
+            left++;
+        }
+        //去除结尾空格
+        while (s.charAt(right) == ' '){
+            right--;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (left <= right){
+            if (s.charAt(left) != ' ' || sb.charAt(sb.length()-1) != ' '){
+                sb.append(s.charAt(left));
+            }
+            left++;
+        }
+        return sb;
+    }
+
+    private StringBuilder reverseEachWord(StringBuilder sb){
+        int n = sb.length();
+        int begin = 0;
+        for (int i = 0; i < n; i++){
+            if (sb.charAt(i) == ' ' || i == n-1){
+                int end = i == n-1 ? i : i-1;
+                while (begin < end){
+                    char tmp = sb.charAt(begin);
+                    sb.setCharAt(begin,sb.charAt(end));
+                    sb.setCharAt(end,tmp);
+                    begin++;end--;
+                }
+                begin = i+1;
+            }
+        }
+        return sb;
+    }
+    private StringBuilder reverseString(StringBuilder sb, int start, int end){
+        while (start < end){
+            char tmp = sb.charAt(start);
+            sb.setCharAt(start,sb.charAt(end));
+            sb.setCharAt(end,tmp);
+            start++;
+            end--;
+        }
+        return sb;
+    }
+
+    /**
+     * 剑指 Offer 58 - II. 左旋转字符串
+     */
+    public String reverseLeftWords(String s, int n) {
+        int length = s.length();
+        String subStr1 = s.substring(0,n);
+        String subStr2 = s.substring(n,length);
+        return subStr2+subStr1;
+    }
+
+    /**
+     * 28. 找出字符串中第一个匹配项的下标
+     */
+
+    public int strStr__(String haystack, String needle) {
+        int len1 = haystack.length();
+        int len2 = needle.length();
+        if (len2 > len1) return -1;
+        for (int i = 0; i < len1-len2+1; i++){
+            if (haystack.substring(i,i+len2).equals(needle)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 28. 找出字符串中第一个匹配项的下标
+     */
+
+    public int strStr_(String haystack, String needle) {
+        int len1 = haystack.length();
+        int len2 = needle.length();
+        if (len2 > len1) return -1;
+        for (int i = 0; i < len1-len2+1; i++){
+            int a = i,b = 0;
+            while (b < len2 && haystack.charAt(a) == needle.charAt(b)){
+                a++;
+                b++;
+            }
+            if (b == len2) return i;
+        }
+        return -1;
+    }
+
+    /**
+     * 28. 找出字符串中第一个匹配项的下标
+     */
+
+    public int strStr(String haystack, String needle) {
+        int len1 = haystack.length();
+        int len2 = needle.length();
+        int[] next = new int[len2];
+        for (int i = 1, j = 0; i < len2; i++){
+            while (j > 0 && needle.charAt(i) != needle.charAt(j)){
+                j = next[j-1];
+            }
+            if (needle.charAt(i) == needle.charAt(j)){
+                j++;
+            }
+            next[i] = j;
+        }
+        for (int i = 0, j = 0; i < len1; i++){
+            while (j > 0 && haystack.charAt(i) != needle.charAt(j)){
+                j = next[j-1];
+            }
+            if (haystack.charAt(i) == needle.charAt(j)){
+                j++;
+            }
+            if (j == len2){
+                return i-len2+1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 459. 重复的子字符串
+     */
+    public boolean repeatedSubstringPattern__(String s) {
+        int len = s.length();
+        for (int i = 1; 2*i <= len; ++i){
+            boolean match = true;
+            if (len % i == 0){
+                for (int j = i; j < len; ++j){
+                    if (s.charAt(j) != s.charAt(j-i)){
+                        match = false;
+                        break;
+                    }
+                }
+                if (match){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 459. 重复的子字符串
+     */
+    public boolean repeatedSubstringPattern_(String s) {
+        return (s+s).indexOf(s,1) != s.length();
+    }
+
+    /**
+     * 459. 重复的子字符串
+     */
+    public boolean repeatedSubstringPattern(String s) {
+        String text = s+s;
+        int n = text.length();
+        int m = s.length();
+        int[] next = new int[m];
+        for (int i = 1, j = 0; i < m; ++i){
+            while (j > 0 && s.charAt(j) != s.charAt(i)){
+                j = next[j-1];
+            }
+            if (s.charAt(j) == s.charAt(i)){
+                j++;
+            }
+            next[i] = j;
+        }
+
+        for (int i = 1, j = 0; i < n-1; ++i){
+            while (j > 0 && text.charAt(i) != s.charAt(j)){
+                j = next[j-1];
+            }
+            if (text.charAt(i) == s.charAt(j)){
+                j++;
+            }
+            if (j == m){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 509.斐波那契数
+     */
+    public int fib(int n) {
+        int[] dp = new int[n+1];
+        if (n == 0){
+            return 0;
+        }
+        dp[0] = 0;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++){
+            dp[i] = dp[i-1]+dp[i-2];
+            System.out.println(dp[i]);
+        }
+        return dp[n];
+    }
+
+    /**
+     * 70.爬楼梯
+     */
+    public int climbStairs(int n) {
+        if (n < 2){
+            return n;
+        }
+        int[] dp = new int[n+1];
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++){
+            dp[i] = dp[i-1]+dp[i-2];
+        }
+        return dp[n];
+    }
+
+    /**
+     * 746. 使用最小花费爬楼梯
+     */
+    public int minCostClimbingStairs(int[] cost) {
+        int n = cost.length;
+        int[] dp = new int[n+1];
+        dp[0] = 0;
+        dp[1] = 0;
+        for (int i = 2; i <= n; i++){
+            dp[i] = Math.min(dp[i-1]+cost[i-1], dp[i-2]+cost[i-2]);
+        }
+        return dp[n];
+    }
+
+    /**
+     * 2460. 对数组执行操作
+     */
+    public int[] applyOperations(int[] nums) {
+        int n = nums.length;
+        for (int i = 0,j = 0; i < n; i++){
+            //翻倍
+            if (i+1 < n && nums[i] == nums[i+1]){
+                nums[i] = nums[i]*2;
+                nums[i+1] = 0;
+            }
+            //交换
+            if (nums[i] != 0){
+                int tmp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = tmp;
+                j++;
+            }
+        }
+        return nums;
+    }
+
+    private void printArray(int[] nums){
+        for (int i = 0; i < nums.length; i++){
+            System.out.print(nums[i] + " ");
+        }
+    }
+
+
+    /**
+     * 选择排序
+     * @param nums 待排序数组
+     * @return
+     */
+    public int[] selectSort(int[] nums){
+        int len = nums.length;
+        for (int i = 0; i < len; i++){
+            int index = i;
+            for (int j = i+1; j < len; j++){
+                if (nums[j] < nums[index]){
+                    index = j;
+                }
+            }
+            int tmp = nums[i];
+            nums[i] = nums[index];
+            nums[index] = tmp;
+        }
+        return nums;
+    }
+
+    /**
+     * 62. 不同路径（动态规划）
+     */
+    public int uniquePaths_(int m, int n) {
+        int[][] f = new int[m][n];
+        //边界处理
+        for (int i = 0; i < m; i++){
+            f[i][0] = 1;
+        }
+        for (int j = 0; j < n; j++){
+            f[0][j] = 1;
+        }
+
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n; j++){
+                f[i][j] = f[i-1][j] + f[i][j-1];
+            }
+        }
+        return f[m-1][n-1];
+    }
+
+    /**
+     * 62. 不同路径（排列组合）
+     */
+    public int uniquePaths(int m, int n) {
+        //从大到小算会出现精度问题
+//        double ans = 1;
+//        for (int y = m-1; y > 0; y--){
+//            ans = ans * (n+y-1) / y;
+//        }
+//        return (int) ans;
+        long ans = 1;
+        for (int y = 0; y < m-1;++y) {
+            ans = ans * (n + y) / (y+1);
+        }
+        return (int) ans;
+    }
+
+    /**
+     * 63. 不同路径 II
+     */
+    public int uniquePathsWithObstacles_(int[][] obstacleGrid) {
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        if (obstacleGrid[m-1][n-1] == 1 || obstacleGrid[0][0] == 1){
+            return 0;
+        }
+        int[][] df = new int[m][n];
+        for (int i = 0; i < m && obstacleGrid[i][0] == 0; i++){
+            df[i][0] = 1;
+        }
+        for (int j = 0; j < n && obstacleGrid[0][j] == 0; j++){
+            df[0][j] = 1;
+        }
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n; j++){
+                if (obstacleGrid[i][j] == 0){
+                    df[i][j] = df[i-1][j]+df[i][j-1];
+                }
+            }
+        }
+        return df[m-1][n-1];
+    }
+
+    /**
+     * 63.不同路径II
+     * @param obstacleGrid
+     * @return
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid){
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        int[][] dp = new int[m][n];
+
+        //初始化dp，第一列都为1，只能向下走，障碍及障碍以下路径为0
+        for (int i = 0; i < m && obstacleGrid[i][0] == 0; i++){
+            dp[i][0] = 1;
+        }
+        //第一列都为1，只能向右走，障碍及障碍右边路径为0
+        for (int j = 0; j < n && obstacleGrid[0][j] == 0; j++){
+            dp[0][j] = 1;
+        }
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n; j++){
+                if (obstacleGrid[i][j] == 1){//有障碍，则路径为0
+                    dp[i][j] = 0;
+                }else{
+                    dp[i][j] = dp[i-1][j]+dp[i][j-1];
+                }
+            }
+        }
+        return dp[m-1][n-1];
+    }
+
+    /**
+     * 343. 整数拆分
+     */
+    public int integerBreak_(int n) {
+        int[] dp = new int[n+1];
+        for (int i = 2; i <= n; i++){
+            for (int j = 1; j < i; j++){
+                dp[i] = Math.max(dp[i], Math.max(j*(i-j), j*dp[i-j]));
+            }
+        }
+        return dp[n];
+    }
+
+    /**
+     * 343. 整数拆分
+     * @param n
+     * @return
+     */
+    public int integerBreak(int n){
+        int[] dp = new int[n+1];
+        for (int i = 2; i < n; i++){
+            for (int j = 1; j < i; j++){
+                dp[i] = Math.max(dp[i-1], Math.max(j*(i-j), j*dp[i-j]));
+            }
+        }
+        return dp[n];
+    }
+
+    /**
+     * 96. 不同的二叉搜索树（动态规划）
+     */
+    public int numTrees_(int n) {
+        int[] dp = new int[n+1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++){
+            for (int j = 1; j <= i; j++){
+                dp[i] += dp[j-1]*dp[i-j];
+            }
+        }
+        return dp[n];
+    }
+
+    /**
+     * 96. 不同的二叉搜索树（卡塔兰数）
+     */
+    public int numTrees(int n) {
+        long c = 1;
+        for (int i = 0; i < n; i++){
+            c = c * 2 * (2 * i + 1)/( i + 2);
+        }
+        return (int) c;
+    }
+
+    /**
+     * 94. 二叉树的中序遍历
+     */
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        inorder(root,list);
+        return list;
+    }
+
+    private void inorder(TreeNode root, List<Integer> list){
+        if (root == null){
+            return;
+        }
+        inorder(root.left, list);
+        list.add(root.val);
+        inorder(root.right, list);
+    }
+
+    /**
+     * 494. 目标和(回溯法)
+     */
+    int count = 0;
+    public int findTargetSumWays_(int[] nums, int target) {
+        backtrack(nums,target,0,0);
+        return count;
+    }
+
+    private void backtrack(int[] nums, int target, int index, int sum){
+        if (index == nums.length){
+            if (sum == target){
+                count++;
+            }
+        }else {
+            backtrack(nums, target, index+1, sum+nums[index]);
+            backtrack(nums, target, index+1, sum-nums[index]);
+        }
+    }
+
+    /**
+     * 494. 目标和(动态规划)
+     */
+    public int findTargetSumWays(int[] nums, int target) {
+        int sum = 0;
+        for (int num : nums){
+            sum+=num;
+        }
+        //判断nums之和是否符合规则
+        int diff = sum - target;
+        if (diff < 0 || diff % 2 != 0){
+            return 0;
+        }
+
+        int n = nums.length, neg = diff/2;
+
+        int[][] dp = new int[n+1][neg+1];
+
+        dp[0][0] = 1;
+        for (int i = 1; i <= n; i++){
+            int num = nums[i];
+            for (int j = 0; j <= neg; j++){
+                dp[i][j] = dp[i-1][j];
+                if (j >= num){
+                    dp[i][j] += dp[i-1][j-num];
+                }
+            }
+        }
+        return dp[n][neg];
+    }
+
+    /**
+     * 474. 一和零
+     */
+    public int findMaxForm(String[] strs, int m, int n) {
+        int length = strs.length;
+        int[][][] dp = new int[length+1][m+1][n+1];
+        for (int i = 1; i <= length; i++){
+            int[] zerosOnes = getZerosOnes(strs[i-1]);
+            for (int j = 0; j <= m; j++){
+                for (int k = 0; k <= n; k++){
+                    dp[i][j][k] = dp[i-1][j][k];
+                    if (j >= zerosOnes[0] && k >= zerosOnes[1]){
+                        dp[i][j][k] = Math.max(dp[i-1][j][k], dp[i-1][j-zerosOnes[0]][k-zerosOnes[1]]+1);
+                    }
+                }
+            }
+        }
+        return dp[length][m][n];
+    }
+
+    public int[] getZerosOnes(String str){
+        int[] zerosOnes = new int[2];
+        int length = str.length();
+        for (int i = 0; i < length; i++){
+            zerosOnes[str.charAt(i) - '0']++;
+        }
+        return zerosOnes;
+    }
+
+    /**
+     * 14. 最长公共前缀
+     */
+    public String longestCommonPrefix(String[] strs) {
+        int n = strs.length;
+        int minLen = Integer.MAX_VALUE;
+        for (String s : strs) {
+            if (s.length() < minLen) {
+                minLen = s.length();
+            }
+        }
+        boolean flag = true;//是否存在公共前缀
+        String maxPrefix = "";
+        for (int i = 0; i <= minLen; i++){
+            String str = strs[0].substring(0,i);
+            for (int j = 1; j < n; j++){
+                if (!strs[j].startsWith(str)){
+                    flag = false;
+                    break;
+                }
+            }
+
+            if (flag){
+                maxPrefix = str;
+            }
+        }
+        return maxPrefix;
+    }
+
+
+    public static int win1(int[] arr){
+        if (arr == null || arr.length == 0){
+            return 0;
+        }
+        int first = f(arr,0,arr.length-1);
+        int second = g(arr,0,arr.length-1);
+        return Math.max(first,second);
+    }
+
+    public static int f(int[] arr, int L, int R){
+        if (L == R){
+            return arr[L];
+        }
+        int p1 = arr[L] + g(arr, L+1, R);
+        int p2 = arr[R] + g(arr, L, R-1);
+        return Math.max(p1,p2);
+    }
+
+    public static int g(int[] arr, int L, int R){
+        if (L == R){
+            return 0;
+        }
+
+        int p1 = f(arr, L+1, R);//对手拿走了L位置的数
+        int p2 = f(arr, L, R-1);//对手拿走了R位置的数
+        return Math.min(p1,p2);
+    }
+
+    public static int win2(int[] arr){
+        if (arr == null || arr.length == 0){
+            return 0;
+        }
+
+        int N = arr.length;
+        int[][] fmap = new int[N][N];
+        int[][] gmap = new int[N][N];
+        for (int i = 0; i < N; i++){
+            for (int j = 0; j < N; j++){
+                fmap[i][j] = -1;
+                gmap[i][j] = -1;
+            }
+        }
+        int first = f2(arr, 0, arr.length-1, fmap, gmap);
+        int second = g2(arr, 0, arr.length-1, fmap, gmap);
+        return Math.max(first,second);
+    }
+
+    public static int f2(int[] arr, int L, int R, int[][] fmap, int[][] gmap){
+        if (fmap[L][R] != -1){
+            return fmap[L][R];
+        }
+        int ans = 0;
+        if (L == R){
+            ans = arr[L];
+        }else {
+            int p1 = arr[L] + g2(arr, L+1, R, fmap, gmap);
+            int p2 = arr[R] + g2(arr, L, R-1, fmap, gmap);
+            ans = Math.max(p1,p2);
+        }
+        fmap[L][R] = ans;
+        return ans;
+    }
+
+    public static int g2(int[] arr, int L, int R, int[][] fmap, int[][] gmap){
+        if (gmap[L][R] != -1){
+            return gmap[L][R];
+        }
+
+        int ans = 0;
+        if (L != R){
+            int p1 = f2(arr, L+1, R, fmap, gmap);
+            int p2 = f2(arr, L, R-1, fmap, gmap);
+            ans = Math.min(p1,p2);
+        }
+        gmap[L][R] = ans;
+        return ans;
+    }
+
+    public static int win3(int[] arr){
+        if (arr == null || arr.length == 0){
+            return 0;
+        }
+
+        int N = arr.length;
+        int[][] fmap = new int[N][N];
+        int[][] gmap = new int[N][N];
+        for (int i = 0; i < N; i++){
+            fmap[i][i] = arr[i];
+        }
+
+        int startRow = 0;
+        for (int startCol = 1; startCol < N; startCol++){
+            int row = 0;
+            int col = startCol;
+            while (col < N){
+                fmap[row][col] = Math.max(arr[row]+gmap[row+1][col], arr[col]+gmap[row][col-1]);
+                gmap[row][col] = Math.min(fmap[row+1][col], fmap[row][col-1]);
+                row++;
+                col++;
+            }
+        }
+
+        return Math.max(fmap[0][N-1],gmap[0][N-1]);
+    }
+
+    //所有的货，重量和价值，都在w和v数组里
+    //为了方便，其中没有负数
+    //bag背包容量，不能超过这个载重
+    //返回：不超重的情况下，能够得到的最大价值
+    public static int maxValue(int[] w, int[] v, int bag){
+        return process(w,v,0,bag);
+    }
+
+    //当前考虑到了index号货物，index...所有的货物可以自由选择
+
+    //做的选择不能超过背包容量
+    //返回最大价值
+    public static int process(int[] w, int[] v, int index, int bag){
+        if (bag < 0){
+            return -1;
+        }
+        if (index == w.length){
+            return 0;
+        }
+        //有货，index位置的货
+        //bag有空间，0
+        //不要当前的货
+        int p1 = process(w,v,index+1,bag);
+        int p2 = 0;
+        int next = process(w,v,index+1,bag-w[index]);
+        if (next != -1){
+            p2 = v[index]+next;
+        }
+        return Math.max(p1,p2);
+    }
+
+    public static int dp(int[] w, int[] v, int bag){
+        int N = w.length;
+        int[][] dp = new int[N+1][bag+1];
+
+        for (int index = N-1; index >= 0; index--){
+            for (int rest = 0; rest <= bag; rest++){
+                int p1 = dp[index+1][rest];//不要当前货物
+                int p2 = 0;
+                int next = rest - w[index] < 0 ? -1 : dp[index+1][rest-w[index]];
+                if (next != -1){
+                    p2 = v[index]+next;
+                }
+                dp[index][rest] = Math.max(p1,p2);
+            }
+        }
+        return dp[0][bag];
+    }
+
+    static class Myqueue{
+
+        Stack<Integer> stackin = new Stack<>();
+        Stack<Integer> stackout = new Stack<>();
+        void push(int x){
+            stackin.push(x);
+        }
+
+        int pop(){
+            if (stackout.empty()){
+                while (!stackin.empty()){
+                    stackout.push(stackin.pop());
+                }
+            }
+            return stackout.pop();
+        }
+
+        int peek(){
+            if (stackout.empty()){
+                while (!stackin.empty()){
+                    stackout.push(stackin.pop());
+                }
+            }
+            return stackout.pop();
+        }
+
+        boolean empty(){
+            return stackout.empty() && stackin.empty();
+        }
+    }
+
+    /**
+     * 21.合并两个有序链表
+     */
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1 == null){
+            return list2;
+        }
+        if (list2 == null){
+            return list1;
+        }
+        ListNode prehead = new ListNode(-1);
+        ListNode pre = prehead;
+        while (list1 != null && list2 != null){
+            if (list1.val <= list2.val){
+                pre.next = list1;
+                list1 = list1.next;
+            }else {
+                pre.next = list2;
+                list2 = list2.next;
+            }
+            pre = pre.next;
+        }
+        pre.next = list1 == null ? list2:list1;
+        return prehead.next;
+    }
+
+    /**
+     * 面试题 02.07. 链表相交
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null){
+            return null;
+        }
+        ListNode pA = headA;
+        ListNode pB = headB;
+        while (pA != pB){
+            pA = pA == null? headB:pA.next;
+            pB = pB == null? headA:pB.next;
+        }
+        return pA;
+    }
+
+
+
+
+
+
+
+
+
+
 
 }
